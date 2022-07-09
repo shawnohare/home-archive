@@ -4,9 +4,6 @@
 # aliases
 export ISHELL="zsh"
 
-# ============================================================================
-# aliases
-# ============================================================================
 case "${OSTYPE}" in
     linux*)
         alias ls="ls --color -GF"
@@ -25,12 +22,12 @@ alias ll="ls -GFlshi"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
+alias .....="cd ../../../.."
 alias emc="emacsclient"
 alias code="code-insiders"
 alias oni="oni2"
-alias vi="nvim"
 alias pyv="conda activate"
-
+alias ce="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
 
 
 

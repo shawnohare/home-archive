@@ -7,7 +7,6 @@
 # (e.g., pyenv and nix).  It should be sourced by the shell's corresponding
 # file if it exists, (e.g., .bash_profile, .zprofile).
 #
-# Non-inheritted settings, like aliases are in ~/.config/sh/init.sh and sourced
 # from the shell specific rc file (e.g., .bashrc, .zshrc)
 
 function set_env_vars() {
@@ -114,7 +113,9 @@ function set_env_vars() {
     # Setting the BROWSER env var can break fish's help command.
     # export BROWSER="safari"
     export PAGER="less"
-    export MANPAGER="less"
+    # export PAGER="nvim --clean +Man!"
+    export MANPAGER="nvim --clean +Man!"
+    # export MANPAGER="less"
     export MANCOLOR=1
     export EDITOR="nvim"
     export VISUAL="nvim"

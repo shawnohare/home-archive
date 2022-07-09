@@ -4,6 +4,7 @@ function _git() {
     git --git-dir=$HOME/.git/ --work-tree=$HOME "$@"
 }
 
+
 function sync() {
     # Pull changes into bare repo and checkout
     cd ~/home.git
@@ -11,19 +12,29 @@ function sync() {
     git commit -m "Syncing"
     git push
     _git fetch
-    _get checkout -f
+    _get pull -f
+}
+
+function edit() {
+    # Obviated by the nvim wrapper in ~/bin/vi
+    export GIT_DIR="$HOME/.git"
+    export GIT_WORK_TREE="$HOME"
+    nvim "$@"
 }
 
 case $1 in
+e|edit)
+    vi "${@:2}"
+    ;;
 g|git)
-  _git "${@:2}"
-  ;;
-add|commit|log|pull|push|status)
-  _git $1 "${@:2}"
-  ;;
+    _git "${@:2}"
+    ;;
+add|commit|diff|log|pull|push|restore|status|switch)
+    _git $1 "${@:2}"
+    ;;
 *)
-  echo "Unrecognized command: $1"
-  exit 1
-  ;;
+    echo "Command $1 not recognized."
+    exit
+    ;;
 esac
 

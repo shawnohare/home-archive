@@ -519,14 +519,14 @@ return require("packer").startup(
                             mode = "i",
                             {
                                 -- Set <expr> option for all nested keymaps
-                                {
-                                    options = {expr = true},
-                                    {
-                                        {"<CR>", "compe#confirm('<CR>')"},
-                                        -- This is equivalent to viml `inoremap <C-Space> <expr>compe#complete()`
-                                        {"<C-Space>", "compe#complete()"}
-                                    }
-                                },
+                                -- {
+                                --     options = {expr = true},
+                                --     {
+                                --         -- {"<CR>", "compe#confirm('<CR>')"},
+                                --         -- This is equivalent to viml `inoremap <C-Space> <expr>compe#complete()`
+                                --         -- {"<C-Space>", "compe#complete()"}
+                                --     }
+                                -- },
                                 {"<C-h>", "<left>"},
                                 {"<C-l>", "<right>"},
                                 {"<C-o>", "<Esc>o"}
