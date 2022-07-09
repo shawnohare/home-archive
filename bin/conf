@@ -1,54 +1,29 @@
 #! /usr/bin/env bash
 
 function _git() {
-    git --git-dir=$HOME/.git/ --work-tree=$HOME $@
+    git --git-dir=$HOME/.git/ --work-tree=$HOME "$@"
 }
 
-function add() {
-    _git add $@
+function sync() {
+    # Pull changes into bare repo and checkout
+    cd ~/home.git
+    git add .
+    git commit -m "Syncing"
+    git push
+    _git fetch
+    _get checkout -f
 }
-
-function commit() {
-    _git commit $@
-}
-
-function fetch() {
-    _git fetch -f
-}
-
-function log() {
-    _git log
-}
-
-function pull() {
-    _git push $@
-}
-
-function push() {
-    _git push $@
-}
-
-function status() {
-    _git status
-}
-
-
-# Dispatch
-
-cmd=1
 
 case $1 in
 g|git)
-  cmd=_git
+  _git "${@:2}"
   ;;
-add|commit|fetch|log|pull|push|status)
-  cmd=$1
+add|commit|log|pull|push|status)
+  _git $1 "${@:2}"
   ;;
 *)
   echo "Unrecognized command: $1"
   exit 1
   ;;
 esac
-
-$cmd ${@:2}
 
