@@ -1,0 +1,43 @@
+#! /usr/bin/env bash
+
+function _git() {
+    git --git-dir=$HOME/.git/ --work-tree=$HOME $@
+}
+
+function status() {
+    _git status
+}
+
+function add() {
+    _git $@
+}
+
+function log() {
+    _git log
+}
+
+# Dispatch
+
+cmd=1
+
+case $1 in
+g|git)
+  cmd=_git
+  ;;
+a|add)
+  cmd=add
+  ;;
+s|status)
+  cmd=status
+  ;;
+log)
+  cmd=log
+  ;;
+*)
+  echo "Unrecognized command: $1"
+  exit 1
+  ;;
+esac
+
+$cmd ${@:2}
+

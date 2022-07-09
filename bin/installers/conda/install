@@ -1,0 +1,93 @@
+#! /usr/bin/env bash
+
+CONDA_HOME="${CONDA_HOME:-${HOME}/.conda}"
+
+# Create environments from an environment file.
+install_venvs() {
+    # TODO: Think through this path a bit more
+    for path in ${CONDA_HOME}/envs/*.yml; do
+        conda env update --file "${path}"
+    done
+}
+
+install() {
+    if [ -e "${CONDA_ROOT}/condabin/conda" ]; then
+        echo "conda already installed in ${CONDA_ROOT}"
+        return 0
+    fi
+
+    local prefix=$1
+
+    if [ -z $1 ]; then
+        echo "No installer prefix specified."
+    fi
+
+    local arch=$(uname -m)
+    local os="UNKNOWN"
+    case "$(uname -s)" in
+        "Darwin" ) os="MacOSX";;
+        "Linux" ) os="Linux";;
+    esac
+
+    # Construct url to installer and installer basename: e.g., Miniconda3-latest-MacOSX-64.sh
+    local url="${prefix}-${os}-${arch}.sh"
+    local installer=$(basename "${url}")
+
+    if [ ! -e "${installer}" ]; then
+        curl -LO "${url}"
+    fi
+
+    # Check to see the actual install script was downloaded.
+    if [ ! -e "${installer}" ] || [ "$(head -n 1 ${installer})" = "Not Found" ]; then
+        echo "Unable to download ${installer}"
+        exit 1
+    fi
+
+    # Don't screw with any rc files.
+    bash "${installer}" -b -p "${CONDA_ROOT}"
+    if [ -e "${CONDA_ROOT}/condabin/conda" ]; then
+        echo "Sucessfully installed ${CONDA_ROOT}"
+        rm -f "${installer}"
+    else
+        echo "Unable to install distribution. Exiting."
+        exit 1
+    fi
+    return 0
+}
+
+
+main() {
+
+    if [ -z "${CONDA_ROOT+x}" ]; then
+        echo "CONDA_ROOT env var not set. Aborting."
+        return 0
+    fi
+
+    local readonly dist="$1"
+
+    case "${dist}" in
+        mambaforge)
+            prefix="https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge"
+            ;;
+        miniforge)
+            prefix="https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3"
+            ;;
+        miniconda)
+            prefix="https://repo.anaconda.com/miniconda/Miniconda3-latest"
+            ;;
+        *)
+            echo "Unsupported distribution ${dist}. Choose mambaforge, miniforge, miniconda."
+            exit 1
+    esac
+    install "${prefix}"
+    # install_venvs
+}
+
+
+if [ -z "${1+x}" ]; then
+    main mambaforge
+else
+    main "$@"
+fi
+
+

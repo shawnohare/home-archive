@@ -1,0 +1,4 @@
+#! /usr/bin/env zsh
+
+# sed -i 's/$1/& $2/g' myDir/**/*.txt
+sed 's/$1/$2/g' **$3

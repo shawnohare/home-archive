@@ -1,0 +1,8 @@
+# Environment file specifying optional conda-forge packages such as dev tools.
+name: neovim3
+channels:
+  - conda-forge
+dependencies:
+  # Seems to be a weird error with 3.8 on macos
+  - python=3.7
+  - pynvim

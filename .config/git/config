@@ -1,0 +1,23 @@
+[alias]
+  la = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  ls = log --decorate
+  s = status
+  sv = status --verbose
+[filter "media"]
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
+[push]
+  default = simple
+[include]
+  path = ~/.config/git/config.local
+[user]
+  name = Shawn M. O'Hare
+  email = shawn@shawnohare.com
+[credential]
+  helper = cache --timeout 604800
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

@@ -1,0 +1,33 @@
+#! /usr/bin/env bash
+# ---------------------------------------------------------------------------
+# macos Specific functions
+# This was originally part of the config helper script, but was split out
+# to avoid having to switch on OS type constantly.
+# ---------------------------------------------------------------------------
+
+# FIXME: maybe just make the initial init phase manual.
+# Install Xcode command line developer tools (required for git/Homebrew)
+# Check whether the exit code of is not 0 (success).
+# (command) runs the command in a subshell.
+install_xcode_cli() {
+  if ! (xcode-select --print-path 1>/dev/null); then
+    echo "Installing xcode command line tools."
+    (xcode-select --install)
+  else
+    $debug && echo "Xcode command line tools are already installed."
+  fi
+}
+
+# init() {
+#   install_xcode
+#   return 0
+# }
+
+install_xcode_cli
+
+# Copy over SF mono font for use system wide. Needed in macOS < 10.13
+if [ ! -e "~/Library/Fonts/SFMono-regular.otf" ]; then
+  cp /Applications/Utilities/Terminal.app/Contents/Resources/Fonts/*.otf ~/Library/Fonts
+fi
+
+

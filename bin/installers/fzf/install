@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ ! -f "{OPT_HOME}/fzf/install"]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git "${OPT_HOME}/fzf"
+fi
+"${OPT_HOME}/fzf/install" --xdg --no-update-rc --key-bindings --completion
+
