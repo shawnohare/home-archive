@@ -4,17 +4,34 @@ function _git() {
     git --git-dir=$HOME/.git/ --work-tree=$HOME $@
 }
 
-function status() {
-    _git status
+function add() {
+    _git add $@
 }
 
-function add() {
-    _git $@
+function commit() {
+    _git commit $@
+}
+
+function fetch() {
+    _git fetch -f
 }
 
 function log() {
     _git log
 }
+
+function pull() {
+    _git push $@
+}
+
+function push() {
+    _git push $@
+}
+
+function status() {
+    _git status
+}
+
 
 # Dispatch
 
@@ -24,14 +41,8 @@ case $1 in
 g|git)
   cmd=_git
   ;;
-a|add)
-  cmd=add
-  ;;
-s|status)
-  cmd=status
-  ;;
-log)
-  cmd=log
+add|commit|fetch|log|pull|push|status)
+  cmd=$1
   ;;
 *)
   echo "Unrecognized command: $1"
