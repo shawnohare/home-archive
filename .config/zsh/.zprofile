@@ -20,15 +20,5 @@
 #    source /etc/profile
 #fi
 
-# ============================================================================
-# path
-# ============================================================================
-PATH="/usr/local/bin:/usr/local/sbin:/usr/local/opt/bin:/opt/bin:${PATH}"
-PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-PATH="${CARGO_HOME}/bin:${GOPATH}/bin:${PATH}"
-PATH="${HOME}/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/bin:${PATH}"
-PATH="${CONDA_OPT_HOME}/bin:${MAMBA_ROOT_PREFIX}/bin:${PYENV_ROOT}/bin:${PATH}"
-# PATH="${CONDA_OPT_HOME}/bin:${CONDA_ROOT}/condabin:${PYENV_ROOT}/bin:${PATH}"
-PATH="${HOME}/bin:${XDG_BIN_HOME}:${PATH}"
-# PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
-export PATH
+# call .profile:set_path
+profile::set_path

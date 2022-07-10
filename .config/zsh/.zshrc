@@ -4,30 +4,8 @@
 # aliases
 export ISHELL="zsh"
 
-case "${OSTYPE}" in
-    linux*)
-        alias ls="ls --color -GF"
-        ;;
-    **)
-        if [ $(command -v gls) 1> /dev/null ]; then
-            alias ls="gls --color -GF"
-        else
-            alias ls="ls -GF"
-        fi
-        ;;
-esac
-
-alias la="ls -GFlashi"
-alias ll="ls -GFlshi"
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias emc="emacsclient"
-alias code="code-insiders"
-alias oni="oni2"
-alias pyv="conda activate"
-alias ce="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
+# Aliases seem to be wiped out if set prior?
+profile::set_aliases
 
 # ----------------------------------------------------------------------------
 # Load plugins.
@@ -35,7 +13,7 @@ alias ce="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
 # suggests its only about 100-200ms faster loading than zplug.
 
 # plug(github_repo, relative_path_to_source)
-function plug() {
+function zsh::plug() {
     # Get everything after last slash.
     # local pkg="${ZSHPLUGINS}/${1##*/}"
     local pkg="${ZSHPLUGINS}/$1"
@@ -331,13 +309,13 @@ setopt notify
 # source "${XDG_STATE_HOME}/pyenv/init.${ISHELL}" 2&> /dev/null
 # source "${XDG_STATE_HOME}/conda/init.${ISHELL}" 2&> /dev/null
 
-source <(conda shell.${ISHELL} hook 2&> /dev/null)
 source "${MAMBA_ROOT_PREFIX}/etc/profile.d/mamba.sh" 2&> /dev/null
 
 # conda init does not seem to do this if an env is already activated.
-if [ ! -z "${CONDA_PREFIX+x}" ]; then
-    export PATH="${CONDA_PREFIX}/bin:$PATH"
-fi
+# source <(conda shell.${ISHELL} hook 2&> /dev/null)
+# if [ ! -z "${CONDA_PREFIX+x}" ]; then
+#     export PATH="${CONDA_PREFIX}/bin:$PATH"
+# fi
 
 # pyenv init script always prepends shims to path.
 source <(pyenv init - --no-rehash ${ISHELL} 2&> /dev/null)

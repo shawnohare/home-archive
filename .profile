@@ -1,4 +1,5 @@
-# Executed by the command interpreter for login shells.
+# ----------------------------------------------------------------------------
+# ~/.profile is xecuted by the command interpreter for login shells.
 # Historically, processing heavy setup is performed here, while transient
 # settings that are not inherited are put in rc files so they can be re-read by
 # every new interactive shell invocation.
@@ -8,25 +9,21 @@
 # file if it exists, (e.g., .bash_profile, .zprofile).
 #
 # from the shell specific rc file (e.g., .bashrc, .zshrc)
+#
+# We treat this file as a library of common profile init functions instead
+# that can be called from other locations.
+# ----------------------------------------------------------------------------
 
-function set_env_vars() {
-    # ----------------------------------------------------------------------------
-    # Global user environment variables.
-    #
-    # ----------------------------------------------------------------------------
-    # ----------------------------------------------------------------------------
+function profile::set_vars() {
     # Init
-    # ----------------------------------------------------------------------------
+    export TESTVAR=1
     export TMPDIR="${TMPDIR:-/tmp}"
     export TERMINAL="alacritty"
 
-    # ----------------------------------------------------------------------------
     # XDG Base Directory Specification
-    #
     # Most applications that utlize XDG respect these variables, but some
     # still utilize hard-coded values or do not have access to the user env
     # (e.g., some graphical applications).
-    # ----------------------------------------------------------------------------
     export LOCAL_HOME="${HOME}/.local"
     export BIN_HOME="${HOME}/bin"
     export DATA_HOME="${HOME}/share"
@@ -54,17 +51,14 @@ function set_env_vars() {
     # export PYTHONUSERBASE="${XDG_OPT_HOME}"
     # export SPARK_HOME="/opt/spark"
     export CARGO_HOME="${OPT_HOME}/cargo"
-    export MAMBA_ROOT_PREFIX="${OPT_HOME}/mambaforge"
+    export MAMBA_ROOT_PREFIX="${OPT_HOME}/mamba"
     export CONDA_ROOT="${MAMBA_ROOT_PREFIX}"
-    export CONDA_HOME="${MAMBA_ROOT_PREFIX}"
-    export CONDA_ENVS_HOME="${CONDA_HOME}/envs"
-    export CONDA_PKGS_HOME="${CONDA_HOME}/pkgs"
-    export CONDA_ENVS_PATH="${CONDA_ENVS_HOME}"
-    export CONDA_PKGS_DIRS="${CONDA_PKGS_HOME}"
-    # conda will load $CONDARC, but wants to write to ~/.condarc
+    export CONDA_ENVS_PATH="${XDG_STATE_HOME}/mamba/envs"
+    export CONDA_PKGS_DIRS="${XDG_STATE_HOME}/mamba/pkgs"
+    # NOTE: conda will load $CONDARC, but wants to write to ~/.condarc
     # export CONDARC="${XDG_CONFIG_HOME}/conda/conda.yml"
     # Set location used to install optional packages via conda. Added to path.
-    export CONDA_OPT_HOME="${CONDA_ENVS_HOME}/opt"
+    export CONDA_OPT_HOME="${CONDA_ENVS_PATH}/opt"
 
     export DOOMDIR="${XDG_CONFIG_HOME}/doom"
     export GOPATH="${OPT_HOME}/go"
@@ -160,18 +154,58 @@ function set_env_vars() {
     export LESS_TERMCAP_us
     export LESS_TERMCAP_ue
 
+    # zsh. Can also set in .zshenv but we'd like other shells to still know
+    # where to look for zsh files, potentially.
+    export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
+    export ZSHDATA="${XDG_STATE_HOME}/zsh"
+    export ZSHPLUGINS="${ZSHDATA}/plugins"
+
     # The following provide color highlighing by default for GREP
     # export GREP_COLOR='37;45'
     # NOTE: GREP_OPTIONS is deprecated.
     # export GREP_OPTIONS='--color=auto'
     export ENV_SET=1
-
 }
 
-if [ -z "${ENV_SET+x}" ]; then
-    set_env_vars
-fi
+function profile::set_aliases() {
+    case "${OSTYPE}" in
+        linux*)
+            alias ls="ls --color -GF"
+            ;;
+        **)
+            if [ $(command -v gls) 1> /dev/null ]; then
+                alias ls="gls --color -GF"
+            else
+                alias ls="ls -GF"
+            fi
+            ;;
+    esac
 
+    alias la="ls -GFlashi"
+    alias ll="ls -GFlshi"
+    alias ..="cd .."
+    alias ...="cd ../.."
+    alias ....="cd ../../.."
+    alias .....="cd ../../../.."
+    alias emc="emacsclient"
+    alias code="code-insiders"
+    alias oni="oni2"
+    alias usevenv="mamba activate"
+    alias ce="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
+}
+
+function profile::set_path() {
+    PATH="/usr/local/bin:/usr/local/sbin:/usr/local/opt/bin:/opt/bin:${PATH}"
+    PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+    PATH="${CARGO_HOME}/bin:${GOPATH}/bin:${PATH}"
+    PATH="${HOME}/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/bin:${PATH}"
+    # TODO: Rely on shell hooks for mamba.
+    # PATH="${CONDA_OPT_HOME}/bin:${MAMBA_ROOT_PREFIX}/bin:${PYENV_ROOT}/bin:${PATH}"
+    # PATH="${CONDA_OPT_HOME}/bin:${CONDA_ROOT}/condabin:${PYENV_ROOT}/bin:${PATH}"
+    PATH="${HOME}/bin:${XDG_BIN_HOME}:${PATH}"
+    # PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
+    export PATH
+}
 
 # ----------------------------------------------------------------------------
 # Linuxbrew

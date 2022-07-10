@@ -1,4 +1,5 @@
-#`.zshenv' is sourced on all invocations of the shell, unless the -f option is
+# ----------------------------------------------------------------------------
+#~ /.zshenv is sourced on all invocations of the shell, unless the -f option is
 # set. It should contain commands to set the command search path, plus other
 # important environment variables. `.zshenv' should not contain commands that
 # produce output or assume the shell is attached to a tty.
@@ -11,12 +12,13 @@
 # *after* this file, so they will override this value.  One solution is to put
 # your path-setting code into a file named .zpath, and source it from both here
 # (if we're not a login shell) and from the .zprofile file (which is only
-# sourced if we are a login shell).  if [[ $SHLVL == 1 && ! -o LOGIN ]]; then
-# source ~/.zpath fi
+# sourced if we are a login shell).
+# ----------------------------------------------------------------------------
 
-source "${HOME}/.profile" 2&> /dev/null
-export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
-export ZSHDATA="${XDG_STATE_HOME}/zsh"
-export ZSHPLUGINS="${ZSHDATA}/plugins"
+source "${HOME}/.profile"
+profile::set_vars
+if [[ $SHLVL == 1 && ! -o LOGIN ]]; then
+    profile::set_path
+fi
 # export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export PYENV_SHELL=zsh  # Normally set by pyenv init -
