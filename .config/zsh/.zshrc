@@ -13,7 +13,7 @@ profile::set_aliases
 # suggests its only about 100-200ms faster loading than zplug.
 
 # plug(github_repo, relative_path_to_source)
-function zsh::plug() {
+function plug() {
     # Get everything after last slash.
     # local pkg="${ZSHPLUGINS}/${1##*/}"
     local pkg="${ZSHPLUGINS}/$1"
