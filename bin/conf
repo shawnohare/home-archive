@@ -22,19 +22,29 @@ function edit() {
     nvim "$@"
 }
 
-case $1 in
-e|edit)
-    vi "${@:2}"
+# Parse command aliases.
+cmd=$1
+case $cmd in
+e)
+    cmd=edit
     ;;
-g|git)
+s)
+    cmd=status
+    ;;
+esac
+
+case $cmd in
+edit)
+    edit "${@:2}"
+    ;;
+git)
     _git "${@:2}"
     ;;
 add|commit|diff|log|pull|push|restore|status|switch)
-    _git $1 "${@:2}"
+    _git "${cmd}" "${@:2}"
     ;;
 *)
     echo "Command $1 not recognized."
     exit
     ;;
 esac
-

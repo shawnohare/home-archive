@@ -29,9 +29,6 @@ alias oni="oni2"
 alias pyv="conda activate"
 alias ce="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
 
-
-
-
 # ----------------------------------------------------------------------------
 # Load plugins.
 # We have some basic custom logic for managing plugins. Basic profiling
@@ -331,8 +328,8 @@ setopt notify
 # ----------------------------------------------------------------------------
 # python
 # ----------------------------------------------------------------------------
-# source "${XDG_DATA_HOME}/pyenv/init.${ISHELL}" 2&> /dev/null
-# source "${XDG_DATA_HOME}/conda/init.${ISHELL}" 2&> /dev/null
+# source "${XDG_STATE_HOME}/pyenv/init.${ISHELL}" 2&> /dev/null
+# source "${XDG_STATE_HOME}/conda/init.${ISHELL}" 2&> /dev/null
 
 source <(conda shell.${ISHELL} hook 2&> /dev/null)
 source "${MAMBA_ROOT_PREFIX}/etc/profile.d/mamba.sh" 2&> /dev/null

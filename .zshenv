@@ -15,8 +15,8 @@
 # source ~/.zpath fi
 
 source "${HOME}/.profile" 2&> /dev/null
-export ZDOTDIR="${XDG_CONFIG_HOME:-${HOME}/.config}/zsh"
-export ZSHDATA="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh"
+export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
+export ZSHDATA="${XDG_STATE_HOME}/zsh"
 export ZSHPLUGINS="${ZSHDATA}/plugins"
 # export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export PYENV_SHELL=zsh  # Normally set by pyenv init -

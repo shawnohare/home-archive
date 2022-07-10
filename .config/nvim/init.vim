@@ -6,17 +6,18 @@
 "   pgsql.
 " - [ ] Consider extracting out LSP configs until we settle on one.
 
+" Seems python provider is now optional
 " python hosts are neovim specific.
+" if executable('conda')
+"     let s:python_host_prefix = $CONDA_ENVS_HOME
+" else
+"     let s:python_host_prefix = $PYENV_ROOT . '/versions'
+" endif
 
-if executable('conda')
-    let s:python_host_prefix = $CONDA_ENVS_HOME
-else
-    let s:python_host_prefix = $PYENV_ROOT . '/versions'
-endif
-
-let g:python_host_prog  = s:python_host_prefix . '/neovim2/bin/python'
-let g:python3_host_prog  = s:python_host_prefix . '/neovim3/bin/python'
+" let g:python_host_prog  = s:python_host_prefix . '/neovim2/bin/python'
+" let g:python3_host_prog  = s:python_host_prefix . '/neovim3/bin/python'
 let g:loaded_python_provider = 0
+let g:loaded_python3_provider = 0
 
 if exists('g:vscode')
     " TODO: Could source code values here.
@@ -41,11 +42,6 @@ let g:initialized = get(g:, 'initialized', 0)
 if executable('rg')
   let g:ackprg = 'rg --vimgrep --no-heading -uu'
 endif
-
-" --------------------------------------------------------------------------
-" easy align
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
 
 " --------------------------------------------------------------------------
 "  lua package configs

@@ -69,14 +69,14 @@ function set_env_vars() {
     export DOOMDIR="${XDG_CONFIG_HOME}/doom"
     export GOPATH="${OPT_HOME}/go"
     export IPYTHONDIR="${XDG_CONFIG_HOME}/ipython"
-    export LESSHISTFILE="${XDG_DATA_HOME}/less/history"
+    export LESSHISTFILE="${XDG_STATE_HOME}/less/history"
     # export LESS=-XNMr
     export LESS=-Mr
     export LISTLINKS=1
     export NIXPKGS_CONFIG="${XDG_CONFIG_HOME}/nixpkgs/config.nix"
     export PIPX_HOME="${XOPT_HOME}/pipx"
     export POETRY_HOME="${OPT_HOME}/pypoetry"
-    export POETRY_VIRTUALENVS_PATH="${XDG_DATA_HOME}/pypoetry/envs"
+    export POETRY_VIRTUALENVS_PATH="${XDG_STATE_HOME}/pypoetry/envs"
     export PYENV_ROOT="${OPT_HOME}/pyenv"
     export PYENV_VIRTUALENV_DISABLE_PROMPT=1
     export PYENV="${OPT_HOME}/pyenv/bin/pyenv"
@@ -88,7 +88,7 @@ function set_env_vars() {
     export SQITCH_USER_CONFIG="${XDG_CONFIG_HOME}/sqitch/config"
     export STACK_ROOT="${OPT_HOME}/stack"
     export STASH_TARGET="${HOME}"
-    export TMUX_PLUGIN_MANAGER_PATH="${XDG_DATA_HOME}/tmux/plugins/"
+    export TMUX_PLUGIN_MANAGER_PATH="${XDG_STATE_HOME}/tmux/plugins/"
     export WEECHAT_HOME="$XDG_CONFIG_HOME"/weechat
 
 
