@@ -40,7 +40,7 @@ edit)
 git)
     _git "${@:2}"
     ;;
-add|commit|diff|log|pull|push|restore|status|switch)
+add|commit|diff|log|pull|push|restore|stash|status|switch|unstage)
     _git "${cmd}" "${@:2}"
     ;;
 *)

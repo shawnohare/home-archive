@@ -157,8 +157,7 @@ function profile::set_vars() {
     # zsh. Can also set in .zshenv but we'd like other shells to still know
     # where to look for zsh files, potentially.
     export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
-    export ZSHDATA="${XDG_STATE_HOME}/zsh"
-    export ZSHPLUGINS="${ZSHDATA}/plugins"
+    export ZSH_PKG_HOME="${XDG_DATA_HOME}/zsh/pack"
 
     # The following provide color highlighing by default for GREP
     # export GREP_COLOR='37;45'
@@ -200,9 +199,10 @@ function profile::set_path() {
     PATH="${CARGO_HOME}/bin:${GOPATH}/bin:${PATH}"
     PATH="${HOME}/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/bin:${PATH}"
     # TODO: Rely on shell hooks for mamba.
-    # PATH="${CONDA_OPT_HOME}/bin:${MAMBA_ROOT_PREFIX}/bin:${PYENV_ROOT}/bin:${PATH}"
+    PATH="${MAMBA_ROOT_PREFIX}/bin:${PYENV_ROOT}/bin:${PATH}"
     # PATH="${CONDA_OPT_HOME}/bin:${CONDA_ROOT}/condabin:${PYENV_ROOT}/bin:${PATH}"
     PATH="${HOME}/bin:${XDG_BIN_HOME}:${PATH}"
+    # TODO: Can probably delete this and use the daemon.
     # PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
     export PATH
 }

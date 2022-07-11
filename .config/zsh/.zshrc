@@ -5,44 +5,49 @@
 export ISHELL="zsh"
 
 # Aliases seem to be wiped out if set prior?
-profile::set_aliases
+if [[ $SHLVL == 1 ]]; then
+    profile::set_aliases
+fi
 
 # ----------------------------------------------------------------------------
 # Load plugins.
 # We have some basic custom logic for managing plugins. Basic profiling
 # suggests its only about 100-200ms faster loading than zplug.
 
-# plug(github_repo, relative_path_to_source)
-function plug() {
+# pack(github_repo, relative_path_to_source)
+function pack() {
+    local repo=$1
     # Get everything after last slash.
-    # local pkg="${ZSHPLUGINS}/${1##*/}"
-    local pkg="${ZSHPLUGINS}/$1"
+    local pkg="${ZSH_PKG_HOME}/${1##*/}"
     if [[ ! -e "${pkg}" ]]; then
-        git clone --recursive --depth 1 "https://github.com/$1" "${pkg}"
+        git clone --recursive --depth 1 "https://github.com/${repo}" "${pkg}"
     fi
     source "${pkg}/$2"
 }
 
-plug "junegunn/fzf"                           "shell/completion.zsh"
-plug "junegunn/fzf"                           "shell/key-bindings.zsh"
+pack "junegunn/fzf"                           "shell/completion.zsh"
+pack "junegunn/fzf"                           "shell/key-bindings.zsh"
 # NOTE: z.lua can be used instead or z.sh
-# plug "rupa/z"                                 "z.sh"
+# pack "rupa/z"                                 "z.sh"
 # when using z-lua installed via nix:
 # eval "$(z --init enhanced zsh 2&> /dev/null)"
 # But it's also available as a zsh plugin it seems.
-plug "skywind3000/z.lua"                      "z.lua.plugin.zsh"
-plug "zsh-users/zsh-completions"              "zsh-completions.plugin.zsh"
-plug "zsh-users/zsh-autosuggestions"          "zsh-autosuggestions.zsh"
-plug "hlissner/zsh-autopair"                  "autopair.zsh"
-plug "zsh-users/zsh-syntax-highlighting"      "zsh-syntax-highlighting.zsh"
-plug "zsh-users/zsh-history-substring-search" "zsh-history-substring-search.zsh"
-plug "esc/conda-zsh-completion"               "conda-zsh-completion.plugin.zsh"
+pack "skywind3000/z.lua"                      "z.lua.plugin.zsh"
+pack "zsh-users/zsh-autosuggestions"          "zsh-autosuggestions.zsh"
+pack "hlissner/zsh-autopair"                  "autopair.zsh"
+pack "zsh-users/zsh-syntax-highlighting"      "zsh-syntax-highlighting.zsh"
+pack "zsh-users/zsh-history-substring-search" "zsh-history-substring-search.zsh"
+pack "esc/conda-zsh-completion"               "conda-zsh-completion.plugin.zsh"
+pack "spwhitt/nix-zsh-completions"            "nix-zsh-completions.plugin.zsh"
+pack "zsh-users/zsh-completions"              "zsh-completions.plugin.zsh"
 
 
 # source "${PYENV_ROOT}/completions/pyenv.zsh"
 # ----------------------------------------------------------------------------
-fpath=(${ZSHDATA}/completions ${ZSHPLUGINS}/zsh-users/zsh-completions ${PYENV_ROOT}/completions $fpath)
-fpath+=${ZSHDATA}/conda-zsh-completion
+fpath=(${XDG_STATE_HOME}/zsh/completions  ${XDG_DATA_HOME}/zsh-completions ${PYENV_ROOT}/completions $fpath)
+fpath+=${ZSH_PKG_HOME}/conda-zsh-completions
+# TODO: nix-zsh-completions seems buggy. No completions shown.
+# fpath+=${ZSH_PKG_HOME}/nix-zsh-completions
 autoload -U compinit && compinit
 
 # ----------------------------------------------------------------------------
@@ -76,27 +81,27 @@ setopt complete_in_word
 setopt correct
 setopt list_ambiguous
 
-zstyle ':completion::complete:*' use-cache on               # completion caching, use rehash to clear
-zstyle ':completion:*' cache-path "${ZSHDATA}/zsh"     # cache path
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # ignore case
-zstyle ':completion:*' menu select=2                        # menu if nb items > 2
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}       # colorz !
-zstyle ':completion:*::::' completer _expand _complete _ignored _approximate # list of completers to use
+# zstyle ':completion::complete:*' use-cache on               # completion caching, use rehash to clear
+# zstyle ':completion:*' cache-path "${ZSH_STATE_HOME}/zsh"     # cache path
+# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # ignore case
+# zstyle ':completion:*' menu select=2                        # menu if nb items > 2
+# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}       # colorz !
+# zstyle ':completion:*::::' completer _expand _complete _ignored _approximate # list of completers to use
 
-# sections completion
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*:descriptions' format $'\e[00;34m%d'
-zstyle ':completion:*:messages' format $'\e[00;31m%d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*:manuals' separate-sections true
+# # sections completion
+# zstyle ':completion:*' verbose yes
+# zstyle ':completion:*:descriptions' format $'\e[00;34m%d'
+# zstyle ':completion:*:messages' format $'\e[00;31m%d'
+# zstyle ':completion:*' group-name ''
+# zstyle ':completion:*:manuals' separate-sections true
 
-zstyle ':completion:*:processes' command 'ps -au$USER'
-zstyle ':completion:*:*:kill:*' menu yes select
-zstyle ':completion:*:kill:*' force-list always
-zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=29=34"
-zstyle ':completion:*:*:killall:*' menu yes select
-zstyle ':completion:*:killall:*' force-list always
-zstyle ':completion:*' users $users
+# zstyle ':completion:*:processes' command 'ps -au$USER'
+# zstyle ':completion:*:*:kill:*' menu yes select
+# zstyle ':completion:*:kill:*' force-list always
+# zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=29=34"
+# zstyle ':completion:*:*:killall:*' menu yes select
+# zstyle ':completion:*:killall:*' force-list always
+# zstyle ':completion:*' users $users
 
 #generic completion with --help
 compdef _gnu_generic gcc
@@ -113,7 +118,7 @@ unalias run-help &> /dev/null
 #
 # ----------------------------------------------------------------------------
 # history
-HISTFILE="${ZSHDATA}/history"
+HISTFILE="${XDG_STATE_HOME}/zsh/history"
 HISTSIZE=2048                    # lines to maintain in memory
 SAVEHIST=100000                  # lines to maintain in history file
 setopt share_history             # share hist between sessions
@@ -290,50 +295,42 @@ setopt notify
 # fi
 
 # ----------------------------------------------------------------------------
-# Nix
-# Multi-user installs source the nix-daemon.sh in /etc profiles but
-# single-user installs do not modify those files. Moreover, a multi-user
-# install does not appear to provide the nix.sh script in the user profile link
-# ----------------------------------------------------------------------------
-# if [ -d $HOME/.nix-profile/etc/profile.d ]; then
-#   for i in $HOME/.nix-profile/etc/profile.d/*.sh; do
-#     if [ -r $i ]; then
-#       source $i
-#     fi
-#   done
-# fi
 
 # ----------------------------------------------------------------------------
-# python
+# mamba
 # ----------------------------------------------------------------------------
 # source "${XDG_STATE_HOME}/pyenv/init.${ISHELL}" 2&> /dev/null
-# source "${XDG_STATE_HOME}/conda/init.${ISHELL}" 2&> /dev/null
-
+# mamba init basically tries to call conda's conda shell.zsh hook
+# but this is equivalent to just sourcing their vendored version first
+source "${MAMBA_ROOT_PREFIX}/etc/profile.d/conda.sh" 2&> /dev/null
 source "${MAMBA_ROOT_PREFIX}/etc/profile.d/mamba.sh" 2&> /dev/null
 
-# conda init does not seem to do this if an env is already activated.
+# TODO: conda init does not seem to do this if an env is already activated.
 # source <(conda shell.${ISHELL} hook 2&> /dev/null)
 # if [ ! -z "${CONDA_PREFIX+x}" ]; then
 #     export PATH="${CONDA_PREFIX}/bin:$PATH"
 # fi
 
+# ----------------------------------------------------------------------------
+# pyenv
+# NOTE: We primarily use mamba or containers.
 # pyenv init script always prepends shims to path.
-source <(pyenv init - --no-rehash ${ISHELL} 2&> /dev/null)
+# ----------------------------------------------------------------------------
+# source <(pyenv init - --no-rehash ${ISHELL} 2&> /dev/null)
 
 # ----------------------------------------------------------------------------
 # starship
 # ----------------------------------------------------------------------------
 source <(starship init ${ISHELL} --print-full-init 2&> /dev/null)
 
+# ----------------------------------------------------------------------------
+# Nix
+# ----------------------------------------------------------------------------
+local nix_daemon="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+# source "${nix_daemon}" 2&> /dev/null
+[[ -e "${nix_daemon}" ]] && source "${nix_daemon}"
 
 # ----------------------------------------------------------------------------
 # finish
 export ZSHRC_SET=1
-
-# All the fzf script does is update path to include fzf bin and source
-# completions / keybindings.
-# source "${XDG_CONFIG_HOME}/fzf/fzf.zsh" > /dev/null 2>&1
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# export PATH="$HOME/.local/opt/pypoetry/bin:$PATH"
 
