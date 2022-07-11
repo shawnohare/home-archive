@@ -89,6 +89,7 @@ let g:tex_flavor = 'latex'
 
 " --------------------------------------------------------------------------
 " comment config
+autocmd FileType nix setlocal commentstring=#\ %s
 autocmd FileType cfg setlocal commentstring=#\ %s
 autocmd FileType sql setlocal commentstring=--\ %s
 autocmd FileType pgsql setlocal commentstring=--\ %s

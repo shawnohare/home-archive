@@ -1,3 +1,4 @@
+# TODO: Note that :: isn't valid posix...
 # lib of applications to install
 
 function pkg::mamba::install() {
@@ -24,27 +25,26 @@ function pkg::mamba::install() {
 }
 
 function pkg::mamba::remove() {
-
+    echo "Not implemented."
+    return 1
 }
 
 function pkg::mamba::update() {
     echo "Not implemented"
-    exit 1
+    return 1
 }
 
 function pkg::nix::install() {
-    if [ -d /nix ]; then
-        echo "Nix already installed."
-        return 0
-    fi
-    local cmd="sh <(curl -L 'https://nixos.org/nix/install') --daemon"
+    sh <(curl -L 'https://nixos.org/nix/install') --daemon
+    source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
     case "${OSTYPE}" in
         linux*)
-            "${cmd}"
             ;;
         darwin*)
-            "${cmd}" --darwin-use-unencrypted-nix-store-volume
             sudo mdutil -i off /nix
+            sudo mv /etc/nix/nix.conf /etc/nix/.nix-darwin.bkp.nix.conf
+            nix build .#darwinConfigurations.j-one.system
+            ./result/sw/bin/darwin-rebuild switch --flake .
             ;;
     esac
 }

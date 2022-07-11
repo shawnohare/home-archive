@@ -6,7 +6,7 @@ export ISHELL="zsh"
 
 # Aliases seem to be wiped out if set prior?
 if [[ $SHLVL == 1 ]]; then
-    profile::set_aliases
+    set_aliases
 fi
 
 # ----------------------------------------------------------------------------

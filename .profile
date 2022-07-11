@@ -14,7 +14,7 @@
 # that can be called from other locations.
 # ----------------------------------------------------------------------------
 
-function profile::set_vars() {
+function set_vars() {
     # Init
     export TESTVAR=1
     export TMPDIR="${TMPDIR:-/tmp}"
@@ -166,7 +166,7 @@ function profile::set_vars() {
     export ENV_SET=1
 }
 
-function profile::set_aliases() {
+function set_aliases() {
     case "${OSTYPE}" in
         linux*)
             alias ls="ls --color -GF"
@@ -193,13 +193,13 @@ function profile::set_aliases() {
     alias ce="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
 }
 
-function profile::set_path() {
+function set_path() {
     PATH="/usr/local/bin:/usr/local/sbin:/usr/local/opt/bin:/opt/bin:${PATH}"
     PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
     PATH="${CARGO_HOME}/bin:${GOPATH}/bin:${PATH}"
     PATH="${HOME}/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/bin:${PATH}"
     # TODO: Rely on shell hooks for mamba.
-    PATH="${MAMBA_ROOT_PREFIX}/bin:${PYENV_ROOT}/bin:${PATH}"
+    # PATH="${MAMBA_ROOT_PREFIX}/bin:${PYENV_ROOT}/bin:${PATH}"
     # PATH="${CONDA_OPT_HOME}/bin:${CONDA_ROOT}/condabin:${PYENV_ROOT}/bin:${PATH}"
     PATH="${HOME}/bin:${XDG_BIN_HOME}:${PATH}"
     # TODO: Can probably delete this and use the daemon.
