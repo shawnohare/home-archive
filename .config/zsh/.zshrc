@@ -111,6 +111,7 @@ compdef _gnu_generic gdb
 # help
 autoload -Uz run-help
 autoload -Uz run-help-git
+autoload -Uz run-help-nix
 autoload -Uz run-help-svn
 autoload -Uz run-help-svk
 unalias run-help &> /dev/null
@@ -325,10 +326,11 @@ source <(starship init ${ISHELL} --print-full-init 2&> /dev/null)
 
 # ----------------------------------------------------------------------------
 # Nix
+# The daemon below should be sourced in /etc/zshrc when nix is installed
 # ----------------------------------------------------------------------------
-local nix_daemon="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+# local nix_daemon="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
 # source "${nix_daemon}" 2&> /dev/null
-[[ -e "${nix_daemon}" ]] && source "${nix_daemon}"
+# [[ -e "${nix_daemon}" ]] && source "${nix_daemon}"
 
 # ----------------------------------------------------------------------------
 # finish

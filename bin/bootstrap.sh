@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-git clone https://github.com/shawnohare/home.git $HOME/.
+git clone https://github.com/shawnohare/home.git $HOME/home.git
 git clone --bare https://github.com/shawnohare/home.git $HOME/.git
 cd $HOME/.git
 git config --local status.showUntrackedFiles no
