@@ -1,3 +1,7 @@
+# Example configs
+#
+# https://github.com/lrewega/nix-configs/blob/nix-darwin/darwin-configuration.nix
+# https://github.com/MatthiasBenaets/nixos-config/blob/master/darwin.org
 { pkgs, lib, ... }:
 {
   environment.variables = {
@@ -16,6 +20,7 @@
 
 
   programs.zsh.enable = true;
+
   # Fonts
   fonts.fontDir.enable = true;
   # fonts.fonts = [
@@ -23,8 +28,29 @@
   #    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   #  ];
 
-  system.keyboard.enableKeyMapping = true;
-  system.keyboard.remapCapsLockToEscape = true;
+  system = {
+    defaults = {
+      # NSGlobalDomain = { };
+      dock = {
+        autohide = true;
+        orientation = "bottom";
+          tilesize = int
+      };
+      finder = {
+        AppleShowAllFiles = true;
+
+      };
+      trackpad = {
+        Clicking = true;
+        TrackpadRightClick = true;
+      };
+    };
+      keyboard = {
+        enableKeyMapping = true;
+        remapCapsLockToEscape = true;
+      };
+  };
+
   # TODO: Is this an option yet?
   # security.pam.enableSudoTouchIdAuth = true;
 }

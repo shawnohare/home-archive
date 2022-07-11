@@ -47,11 +47,10 @@ On macOS this is possible [nix-darwin](https://github.com/LnL7/nix-darwin)
 which provides a configuration.nix experience.
 
 
-# Nix setup
+# Nix Setup
 
-[A gist with a minimal setup for nix-darwin+home-manager on mac M1](https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050)
-
-The API for nix seems to have changed since 2.9 and almost all the
-resources I have come across for nix-darwin and home-manager result in commands
-simply failing.
+-   [A gist with a minimal setup for nix-darwin+home-manager on mac M1](https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050)
+    The API for nix seems to have changed since 2.9 and almost all the
+    resources I have come across for nix-darwin and home-manager result in commands
+    simply failing.
 

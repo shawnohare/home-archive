@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#! /usr/bin/env sh
 
 function _git() {
     git --git-dir=$HOME/.git/ --work-tree=$HOME "$@"
@@ -34,6 +34,7 @@ s)
 esac
 
 case $cmd in
+
 edit)
     edit "${@:2}"
     ;;
@@ -43,7 +44,11 @@ git)
 add|commit|diff|log|pull|push|restore|stash|status|switch|unstage)
     _git "${cmd}" "${@:2}"
     ;;
-*)
+ls)
+    # _git ls-tree -r --name-status master "${@:2}"
+    _git ls-files "${@:2}"
+    ;;
+**)
     echo "Command $1 not recognized."
     exit
     ;;
