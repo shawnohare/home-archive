@@ -35,7 +35,8 @@ return require("packer").startup(
                 require("nvim-treesitter.configs").setup {
                     ensure_installed = "all", -- one of "all", "language", or a list of languages
                     highlight = {
-                        enable = true
+                        enable = true,
+                        -- additional_vim_regex_highlighting = {'org'},
                         -- disable = { "c", "rust"},  -- list of language that will be disabled
                     },
                     indent = {
@@ -60,6 +61,16 @@ return require("packer").startup(
                 }
             end
         }
+
+        -- NOTE: Kept receiving startup error.
+        -- use {
+        --     'nvim-orgmode/orgmode',
+        --     config = function()
+        --         local orgmode = require('orgmode')
+        --         -- orgmode.setup_ts_grammer()
+        --         orgmode.setup{}
+        --     end
+        -- }
 
         use {
             'windwp/nvim-autopairs',
@@ -168,15 +179,37 @@ return require("packer").startup(
         -- ------------------------------------------------------------------------
         -- LSP
         -- ------------------------------------------------------------------------
+        use {
+            "williamboman/mason.nvim",
+            config = function()
+                local mason = require("mason")
+                mason.setup({
+                    ui = {
+                        icons = {
+                            package_installed = "✓",
+                            package_pending = "➜",
+                            package_uninstalled = "✗",
+                        },
+                    },
+                })
+            end
+        }
+
+        use {
+            "williamboman/mason-lspconfig.nvim",
+            config = function()
+                require("mason").setup()
+            end
+        }
 
         use {
             "neovim/nvim-lspconfig",
             requires = {
-                "williamboman/nvim-lsp-installer",
+                "williamboman/mason.nvim",
+                "williamboman/mason-lspconfig.nvim",
             },
             after = "nvim-cmp",
             config = function()
-                local installer = require("nvim-lsp-installer")
                 local lspconfig = require("lspconfig")
 
                 -- NOTE: This can probably go into defaults?
@@ -223,22 +256,23 @@ return require("packer").startup(
                     }
                 }
 
-                installer.on_server_ready(
-                    function(server)
+                -- TODO: Update to mason.
+                -- installer.on_server_ready(
+                --     function(server)
 
-                        -- Get server specific configuration.
-                        local conf = server_configs[server.name]
-                        if conf == nil then
-                            conf = {}
-                        end
+                --         -- Get server specific configuration.
+                --         local conf = server_configs[server.name]
+                --         if conf == nil then
+                --             conf = {}
+                --         end
 
-                        -- This setup() function is exactly the same as lspconfig's setup function.
-                        -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-                        server:setup(conf)
-                        -- Do we need to attach?
-                        vim.cmd([[ do User LspAttach Buffers ]])
-                    end
-                )
+                --         -- This setup() function is exactly the same as lspconfig's setup function.
+                --         -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+                --         server:setup(conf)
+                --         -- Do we need to attach?
+                --         vim.cmd([[ do User LspAttach Buffers ]])
+                --     end
+                -- )
 
             end
         }
