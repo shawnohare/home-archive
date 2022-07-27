@@ -24,6 +24,7 @@ function set_vars() {
     # Most applications that utlize XDG respect these variables, but some
     # still utilize hard-coded values or do not have access to the user env
     # (e.g., some graphical applications).
+    export CONFIG_HOME="${HOME}/conf"
     export LOCAL_HOME="${HOME}/.local"
     export BIN_HOME="${HOME}/bin"
     export DATA_HOME="${HOME}/share"
@@ -68,7 +69,7 @@ function set_vars() {
     export LESS=-Mr
     export LISTLINKS=1
     export NIXPKGS_CONFIG="${XDG_CONFIG_HOME}/nixpkgs/config.nix"
-    export PIPX_HOME="${XOPT_HOME}/pipx"
+    export PIPX_HOME="${OPT_HOME}/pipx"
     export POETRY_HOME="${OPT_HOME}/pypoetry"
     export POETRY_VIRTUALENVS_PATH="${XDG_STATE_HOME}/pypoetry/envs"
     export PYENV_ROOT="${OPT_HOME}/pyenv"
@@ -167,43 +168,42 @@ function set_vars() {
 }
 
 function set_aliases() {
-    case "${OSTYPE}" in
-        linux*)
-            alias ls="ls --color -GF"
-            ;;
-        **)
-            if [ $(command -v gls) 1> /dev/null ]; then
-                alias ls="gls --color -GF"
-            else
-                alias ls="ls -GF"
-            fi
-            ;;
-    esac
+    # case "${OSTYPE}" in
+    #     linux*)
+    #         alias ls="ls --color -GF"
+    #         ;;
+    #     **)
+    #         if [ $(command -v gls) 1> /dev/null ]; then
+    #             alias ls="gls --color -GF"
+    #         else
+    #             alias ls="ls -GF"
+    #         fi
+    #         ;;
+    # esac
 
-    alias la="ls -GFlashi"
-    alias ll="ls -GFlshi"
-    alias ..="cd .."
-    alias ...="cd ../.."
-    alias ....="cd ../../.."
-    alias .....="cd ../../../.."
-    alias emc="emacsclient"
-    alias code="code-insiders"
-    alias oni="oni2"
-    alias usevenv="mamba activate"
-    alias ce="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
+    # alias la="ls -GFlashi"
+    # alias ll="ls -GFlshi"
+    # alias ..="cd .."
+    # alias ...="cd ../.."
+    # alias ....="cd ../../.."
+    # alias .....="cd ../../../.."
+    # alias emc="emacsclient"
+    # alias code="code-insiders"
+    # alias oni="oni2"
+    # alias usevenv="mamba activate"
+    # alias ce="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
 }
 
 function set_path() {
-    PATH="/usr/local/bin:/usr/local/sbin:/usr/local/opt/bin:/opt/bin:${PATH}"
-    PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-    PATH="${CARGO_HOME}/bin:${GOPATH}/bin:${PATH}"
-    PATH="${HOME}/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/bin:${PATH}"
+    local usr="/usr/local/bin:/usr/local/sbin:/usr/local/opt/bin:/opt/bin"
+    local lang="${CARGO_HOME}/bin:${GOPATH}/bin:${PATH}"
+    local local="${HOME}/bin:${XDG_BIN_HOME}"
+    # append to path so nix profile comes first
+    PATH="${PATH}:${local}:${lang}:${usr}"
     # TODO: Rely on shell hooks for mamba.
     # PATH="${MAMBA_ROOT_PREFIX}/bin:${PYENV_ROOT}/bin:${PATH}"
     # PATH="${CONDA_OPT_HOME}/bin:${CONDA_ROOT}/condabin:${PYENV_ROOT}/bin:${PATH}"
-    PATH="${HOME}/bin:${XDG_BIN_HOME}:${PATH}"
     # TODO: Can probably delete this and use the daemon.
-    # PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
     export PATH
 }
 
