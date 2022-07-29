@@ -8,6 +8,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.api.nvim_command("packadd packer.nvim")
 end
 
+
 -- Only required if you have packer configured as `opt`
 -- Apparently it's only loaded on require now anyway?
 -- vim.cmd [[packadd packer.nvim]]
@@ -198,7 +199,6 @@ return require("packer").startup(
         use {
             "williamboman/mason-lspconfig.nvim",
             config = function()
-                require("mason").setup()
             end
         }
 
@@ -211,17 +211,7 @@ return require("packer").startup(
             after = "nvim-cmp",
             config = function()
                 local lspconfig = require("lspconfig")
-
-                -- NOTE: This can probably go into defaults?
-                -- Disable virtual text in diagnostics.
-                -- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-                --   vim.lsp.diagnostic.on_publish_diagnostics,
-                --   {
-                --     underline = true,
-                --     signs = true,
-                --     virtual_text = false,
-                --   }
-                -- )
+                local mason_lspconfig = require("mason-lspconfig")
 
                 -- Default args to merge into global lsp configs.
                 local defaults = {
@@ -255,6 +245,47 @@ return require("packer").startup(
                         }
                     }
                 }
+
+                mason_lspconfig.setup({
+                  ensure_installed = {
+                    "eslint-lsp",
+                    "rome",
+                    "terraform-ls",
+                    "tflint",
+                    "typescript-language-server",
+                    "yaml-language-server",
+                    "yamllint",
+                    "sumneko_lua",
+                    "pyright",
+                    "pylint",
+                  }
+                })
+                mason_lspconfig.setup_handlers({
+                  function (server_name)
+                    local sconf = server_configs[server_name]
+                    if sconf == nil then
+                        sconf = {}
+                    end
+                    -- probably want to merge this in to some other default?
+                    -- sconf.on_attach = require("shared").on_attach,
+
+
+                    require("lspconfig")[server_name].setup(sconf)
+                  end
+                })
+
+
+                -- NOTE: This can probably go into defaults?
+                -- Disable virtual text in diagnostics.
+                -- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+                --   vim.lsp.diagnostic.on_publish_diagnostics,
+                --   {
+                --     underline = true,
+                --     signs = true,
+                --     virtual_text = false,
+                --   }
+                -- )
+
 
                 -- TODO: Update to mason.
                 -- installer.on_server_ready(

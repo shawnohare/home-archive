@@ -7,13 +7,15 @@ fetched from the bare repository.
 
 ## Initialization
 
-To get the initial configuration files to a new environment run.
+
+We prefer a quick and destructive way to pull user configuration files
+into `$HOME`.
 
 ```bash
-git clone --bare https://github.com/shawnohare/home.git $HOME/.git
-cd $HOME/.git
+git clone --bare https://github.com/shawnohare/home.git $HOME/home.git
+cd $HOME/home.git
 git config --local status.showUntrackedFiles no
-git --git-dir=$HOME/.git/ --work-tree=$HOME checkout -f
+git --git-dir=$HOME/home.git/ --work-tree=$HOME checkout -f
 ```
 
 An alternative is to use rsync.
@@ -38,10 +40,13 @@ conf git <cmd> [args]
 # equivalent to git --git-dir=$HOME/.git work-tree=$HOME <cmd> [args]
 ```
 
+## Nix
+
 ## Goals
 
-We would like to move towards a nixos like configuration that uses nix
-home-manager.
+We would like to move towards a NixOS like configuration that uses nix
+home-manager. In theory it would subsume much of the configuration files in
+this repository
 
 On macOS this is possible [nix-darwin](https://github.com/LnL7/nix-darwin)
 which provides a configuration.nix experience.
@@ -49,6 +54,9 @@ which provides a configuration.nix experience.
 
 # Nix Setup
 
+- https://github.com/MatthiasBenaets/nixos-config
+- https://github.com/lrewega/nix-configs
+- https://github.com/jwiegley/nix-config
 -   [A gist with a minimal setup for nix-darwin+home-manager on mac M1](https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050)
     The API for nix seems to have changed since 2.9 and almost all the
     resources I have come across for nix-darwin and home-manager result in commands
