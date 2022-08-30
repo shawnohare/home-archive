@@ -168,30 +168,32 @@ function set_vars() {
 }
 
 function set_aliases() {
-    # case "${OSTYPE}" in
-    #     linux*)
-    #         alias ls="ls --color -GF"
-    #         ;;
-    #     **)
-    #         if [ $(command -v gls) 1> /dev/null ]; then
-    #             alias ls="gls --color -GF"
-    #         else
-    #             alias ls="ls -GF"
-    #         fi
-    #         ;;
-    # esac
+    # skip
+    return 0
+    case "${OSTYPE}" in
+        linux*)
+            alias ls="ls --color -GF"
+            ;;
+        **)
+            if [ $(command -v gls) 1> /dev/null ]; then
+                alias ls="gls --color -GF"
+            else
+                alias ls="ls -GF"
+            fi
+            ;;
+    esac
 
-    # alias la="ls -GFlashi"
-    # alias ll="ls -GFlshi"
-    # alias ..="cd .."
-    # alias ...="cd ../.."
-    # alias ....="cd ../../.."
-    # alias .....="cd ../../../.."
-    # alias emc="emacsclient"
-    # alias code="code-insiders"
-    # alias oni="oni2"
-    # alias usevenv="mamba activate"
-    # alias ce="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
+    alias la="ls -GFlashi"
+    alias ll="ls -GFlshi"
+    alias ..="cd .."
+    alias ...="cd ../.."
+    alias ....="cd ../../.."
+    alias .....="cd ../../../.."
+    alias emc="emacsclient"
+    alias code="code-insiders"
+    alias oni="oni2"
+    alias usevenv="mamba activate"
+    alias ce="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
 }
 
 function set_path() {
