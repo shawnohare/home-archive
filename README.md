@@ -12,10 +12,10 @@ We prefer a quick and destructive way to pull user configuration files
 into `$HOME`.
 
 ```bash
-git clone --bare https://github.com/shawnohare/home.git $HOME/home.git
-cd $HOME/home.git
+git clone --bare https://github.com/shawnohare/home.git $HOME/.git
+cd $HOME/.git
 git config --local status.showUntrackedFiles no
-git --git-dir=$HOME/home.git/ --work-tree=$HOME checkout -f
+git --git-dir=$HOME/.git/ --work-tree=$HOME checkout -f
 ```
 
 An alternative is to use rsync.
