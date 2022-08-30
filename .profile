@@ -98,6 +98,9 @@ function set_vars() {
     # ----------------------------------------------------------------------------
     # Misc App Settings
     # ----------------------------------------------------------------------------
+    export HOMEBREW_PREFIX=/opt/homebrew
+    export HOMEBREW_CELLAR=/opt/homebrew/Cellar
+    export HOMEBREW_REPOSITORY=/opt/homebrew
     export HOMEBREW_NO_ANALYTICS=1
     export HOMEBREW_NO_AUTO_UPDATE=1
     export HOMEBREW_BOOTSNAP=1
@@ -197,11 +200,14 @@ function set_aliases() {
 }
 
 function set_path() {
-    local usr="/usr/local/bin:/usr/local/sbin:/usr/local/opt/bin:/opt/bin"
+    
+    local usr="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/bin:/opt/bin"
     local lang="${CARGO_HOME}/bin:${GOPATH}/bin:${PATH}"
-    local local="${HOME}/bin:${XDG_BIN_HOME}"
+    # NOTE: brew shellenv just sets some vars
+    # eval "$(/opt/homebrew/bin/brew shellenv)" 2&> /dev/null
+    local loc="${HOME}/bin:${XDG_BIN_HOME}"
     # append to path so nix profile comes first
-    PATH="${PATH}:${local}:${lang}:${usr}"
+    PATH="${PATH}:${loc}:${lang}:${usr}"
     # TODO: Rely on shell hooks for mamba.
     # PATH="${MAMBA_ROOT_PREFIX}/bin:${PYENV_ROOT}/bin:${PATH}"
     # PATH="${CONDA_OPT_HOME}/bin:${CONDA_ROOT}/condabin:${PYENV_ROOT}/bin:${PATH}"
