@@ -1,5 +1,7 @@
 local wezterm = require('wezterm')
 
+-- Define identity function on colors to make copying code from the
+-- neovim Lush theme these colors are based on simple.
 local function hsluv(val)
     return val
 end
@@ -24,19 +26,6 @@ local color = {
         magenta = 330,
         cerise  = 345,
         rose    = 360,
-    },
-    -- okhsl(h, 100, 50)
-    l50 = {
-        red     = hsluv('#df0024'),
-        orange  = hsluv('#b45c00'),
-        yellow  = hsluv('#7c7d00'),
-        green   = hsluv('#588800'),
-        spring  = hsluv('#008e50'),
-        cyan    = hsluv('#008a7f'),
-        blue    = hsluv('#007dc5'),
-        violet  = hsluv('#7e43ff'),
-        magenta = hsluv('#c300bd'),
-        rose    = hsluv('#d70072'),
     },
     -- okhsl(h, 100, 55)
     l55 = {
@@ -85,24 +74,6 @@ local color = {
         magenta = hsluv('#ff0bf7'),
         rose    = hsluv('#ff5699'),
     },
-    -- okhsl(h, 100, 70)
-    -- l70 = {
-    --     red     = hsluv('#ff7f78'),
-    --     orange  = hsluv('#ff8610'),
-    --     yellow  = hsluv('#b3b300'),
-    --     green   = hsluv('#80c200'), -- h=130
-    --     spring  = hsluv('#00cc76'), -- h=155
-    --     cyan    = hsluv('#00c6b6'), -- h=185
-    --     blue    = hsluv('#52b3ff'),
-    --     violet  = hsluv('#ab9aff'), -- h=290
-    --     magenta = hsluv('#ff5cf6'),
-    --     cerise  = hsluv('#ff6ec8'),
-    --     rose    = hsluv('#ff77a7'), -- h=360,
-    --     -- green   = hsluv('#68c700'), -- h=135
-    --     -- green   = hsluv('#00cd5f'), -- h=150
-    --     -- cyan    = hsluv('#00c5bd'), -- h=190
-    --     -- cyan    = hsluv('#00c7af'), -- h=180
-    -- },
     -- okhsl(h, 100, 75) for backgrounds
     l75 = {
         red     = hsluv('#ff9890'),
@@ -143,119 +114,72 @@ local color = {
         magenta = hsluv('#ffbaf8'),
         rose    = hsluv('#ffc1d2'),
     },
-    -- gray05 = hsluv('#111111'), -- l=05,
-    -- gray10 = hsluv('#1b1b1b'), -- l=10,
-    -- gray15 = hsluv('#262626'), -- l=15,
-    -- gray20 = hsluv('#303030'), -- l=20,
-    -- gray25 = hsluv('#3b3b3b'), -- l=25,
-    -- gray30 = hsluv('#474747'), -- l=30,
-    -- gray35 = hsluv('#525252'), -- l=35,
-    -- gray40 = hsluv('#5e5e5e'), -- l=40,
-    -- gray45 = hsluv('#6a6a6a'), -- l=45,
-    -- gray50 = hsluv('#777777'), -- l=50,
-    -- gray55 = hsluv('#848484'), -- l=55,
-    -- gray60 = hsluv('#919191'), -- l=60,
-    -- gray65 = hsluv('#9e9e9e'), -- l=65,
-    -- gray70 = hsluv('#ababab'), -- l=70,
-    -- gray75 = hsluv('#b9b9b9'), -- l=75,
-    -- gray80 = hsluv('#c6c6c6'), -- l=80,
-    -- gray85 = hsluv('#d4d4d4'), -- l=85,
-    -- gray90 = hsluv('#e2e2e2'), -- l=90,
-    -- gray95 = hsluv('#f1f1f1'), -- l=95.
-
-    -- base values (saturation mostly 10)
-    -- -- base08 = hsluv('#051318'), -- s=50,
-    -- -- base10 = hsluv('#08191e'), -- s=50,
-    -- -- base15 = hsluv('#0f262d'), -- s=50,
-    -- -- base20 = hsluv('#16333b'), -- s=50,
-    -- base08 = hsluv('#00141b'), -- s=100,
-    -- base10 = hsluv('#001a22'), -- s=100,
-    -- base15 = hsluv('#002732'), -- s=100,
-    -- base20 = hsluv('#003441'), -- s=100,
-    -- -- base25 = hsluv('#1d3f4a'), -- s=50,
-    -- -- base25 = hsluv('#004151'), -- s=100,
-    -- -- base25 = hsluv('#2a3d43'), -- s=25,
-    -- base25 = hsluv('#333c3e'), -- s=10
-    -- base30 = hsluv('#3e484b'), -- s=10
-    -- base35 = hsluv('#495457'), -- s=10
-    -- base40 = hsluv('#556064'), -- s=10
-    -- base45 = hsluv('#606d71'), -- s=10
-    -- base50 = hsluv('#6c7a7e'), -- s=10
-    -- base55 = hsluv('#79878b'), -- s=10
-    -- base60 = hsluv('#859499'), -- s=10
-    -- base65 = hsluv('#93a1a6'), -- s=10
-    -- base70 = hsluv('#a1aeb3'), -- s=10,
-    -- base75 = hsluv('#afbbc0'), -- s=10
-    -- base80  = hsluv('#bec9cc'),  -- s=10
-    -- base85  = hsluv('#ced6d9'),  -- s=10,
-    -- base90  =  hsluv('#dee4e6'), -- s=10,
-    -- -- base92  =  hsluv('#e4e9eb'), -- s=10,
-    -- base95  =  hsluv('#eef1f2'), -- s=10,
-    -- base97  =  hsluv('#f5f7f7'), -- s=10,
-    -- base87  =  hsluv('#d4dcde'), -- l=87,
-    -- base82  =  hsluv('#c4ced1'), -- l=82
-    --
-    -- base (saturation mostly 5)
-    -- base05 = hsluv('#000b0f'),
-    base08 = hsluv('#00141b'), -- s=100,
-    base10 = hsluv('#001a22'), -- s=100,
-    base12 = hsluv('#001f28'), -- s=100,
-    base15 = hsluv('#002732'), -- s=100,
-    -- base20 = hsluv('#16333b'), -- s=50,
-    -- base20 = hsluv('#0b343f'), -- s=75, hsluv(221, 90, 19),
-    base20 = hsluv('#003441'), -- s=100,
-    base25 = hsluv('#004151'), -- s=100
-    -- base25s25 = hsluv('#2a3d43'), -- s=25,
-    -- base25s50 = hsluv('#1d3f4a'), -- s=50,
-    -- base25 = hsluv('#363b3c'), -- s=05,
-    base27 = hsluv('#3b4041'), -- s=05,
-    base28 = hsluv('#3d4243'),
-    base30 = hsluv('#424748'),
-    base35 = hsluv('#4d5355'),
-    base40 = hsluv('#595f61'),
-    base45 = hsluv('#656c6e'),
-    base50 = hsluv('#71787b'),
-    base55 = hsluv('#7e8588'),
-    base60 = hsluv('#8b9295'),
-    base65 = hsluv('#989fa2'),
-    base70 = hsluv('#a6adaf'),
-    base75 = hsluv('#b4babc'),
-    base80 = hsluv('#c2c8c9'),
-    base85 = hsluv('#d1d5d7'),
-    base90 = hsluv('#e0e3e4'),
-    -- base93 = hsluv('#e9ebec'), -- s=05
-    -- base95 = hsluv('#f0f1f1'),
-    base97 = hsluv('#f6f7f7'),
 }
+
+-- okhsl(220, s=33|05, l)
+local base = {
+    -- experiment with different saturation levels
+    -- saturation = 100
+    -- l05s100 = hsluv('#000b0f'),
+    -- l07s100 = hsluv('#041014'),
+    -- l08s100 = hsluv('#00141b'),
+    -- l10s100 = hsluv('#001a22'),
+    -- l12s100 = hsluv('#001f28'),
+    -- l15s100 = hsluv('#002732'),
+    -- l20s100 = hsluv('#003441'),
+    -- l25s100 = hsluv('#004151'),
+    -- saturation = 50
+    -- l08s50 = hsluv('#051318'),
+    -- l10s50 = hsluv('#08191e'),
+    -- l12s50 = hsluv('#0b1e24'),
+    -- l15s50 = hsluv('#0f262d'),
+    -- l20s50 = hsluv('#16333b'),
+    -- l25s50 = hsluv('#1d3f4a'),
+    -- darks, saturation = 33
+    -- l05 = hsluv('#040a0c'),
+    -- l06 = hsluv('#050d10'),
+    -- l07 = hsluv('#071013'),
+    l08 = hsluv('#081316'),
+    l10 = hsluv('#0c181c'),
+    l12 = hsluv('#101e22'),
+    l15 = hsluv('#132328'),
+    l20 = hsluv('#1e3238'),
+    l25 = hsluv('#263e46'),
+    -- mids and lights, saturation = 5
+    l27 = hsluv('#3b4041'),
+    l28 = hsluv('#3d4243'),
+    l30 = hsluv('#424748'),
+    l35 = hsluv('#4d5355'),
+    l40 = hsluv('#595f61'),
+    l45 = hsluv('#656c6e'),
+    l50 = hsluv('#71787b'),
+    l55 = hsluv('#7e8588'),
+    l60 = hsluv('#8b9295'),
+    l65 = hsluv('#989fa2'),
+    l70 = hsluv('#a6adaf'),
+    l75 = hsluv('#b4babc'),
+    l80 = hsluv('#c2c8c9'),
+    l85 = hsluv('#d1d5d7'),
+    l90 = hsluv('#e0e3e4'),
+    l93 = hsluv('#e9ebec'),
+    l95 = hsluv('#f0f1f1'),
+    l97 = hsluv('#f6f7f7'),
+}
+
+
 
 local light = {
     -- okhsl(220, 10, l)
-    bg = {
-        color.base97,
-        -- color.base95,
-        color.base93,
-        color.base90,
-        color.base85,
-        color.base80,
-    },
-    fg = {
-        color.base55,
-        color.base45,
-        color.base35,
-        color.base28,
-        color.base08,
-    },
-    bg0 = color.base97,
-    bg1 = color.base93,
-    bg2 = color.base90,
-    bg3 = color.base85,
-    bg4 = color.base80,
-    fg4 = color.base55,
-    fg3 = color.base45,
-    fg2 = color.base35,
-    fg1 = color.base28,
-    dim = color.l55,
-    hue = color.l55,
+    bg0 = base.l97,
+    bg1 = base.l93,
+    bg2 = base.l90,
+    bg3 = base.l85,
+    bg4 = base.l80,
+    fg4 = base.l55,
+    fg3 = base.l45,
+    fg2 = base.l35,
+    fg1 = base.l28,
+    -- dim = color.l55,
     red = color.l55.red,
     orange = color.l55.orange,
     yellow = color.l55.yellow,
@@ -272,19 +196,17 @@ local light = {
 
 local dark = {
     -- okhsl(220, 100, l)
-    bg0 = color.base08,
-    bg1 = color.base12,
-    bg2 = color.base15,
-    bg3 = color.base20,
-    bg4 = color.base25,
-    fg4 = color.base45,
-    fg3 = color.base55,
-    fg2 = color.base65,
-    fg1 = color.base75,
-    fg0 = color.base90,
-    -- colors
-    dim = color.l55,
-    hue = color.l60,
+    bg0 = base.l08,
+    bg1 = base.l12,
+    bg2 = base.l15,
+    bg3 = base.l20,
+    bg4 = base.l25,
+    fg4 = base.l45,
+    fg3 = base.l55,
+    fg2 = base.l65,
+    fg1 = base.l75,
+    fg0 = base.l90,
+    -- dim = color.l55,
     red = color.l60.red,
     orange = color.l60.orange,
     yellow = color.l60.yellow,
@@ -306,11 +228,11 @@ local palette = dark
 return {
     font = wezterm.font(
         "JetBrainsMono Nerd Font",
-        {}
+        { weight = 'Medium' }
     ),
     font_size = 14,
     bold_brightens_ansi_colors = false,
-    dpi = 144.0,
+    -- dpi = 144.0,
     -- freetype_load_target = "Normal",
     -- freetype_render_target = "HorizontalLcd",
     -- hadalized dark color scheme
