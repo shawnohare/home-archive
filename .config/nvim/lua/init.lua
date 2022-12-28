@@ -1,30 +1,137 @@
--- ---------------------------------------------------------------------------
--- experimental
--- ---------------------------------------------------------------------------
--- require('opts')
--- require('pkgs')
--- require('keys')
--- require('style')
+-- NOTE: Useful notes https://vonheikemen.github.io/devlog/tools/configuring-neovim-using-lua/
 
 -- ---------------------------------------------------------------------------
--- main
+-- pre package config
+-- ---------------------------------------------------------------------------
+vim.g.mapleader = " "
+vim.o.termguicolors = true
+vim.o.background = 'dark'
+
+
+vim.cmd([[
+try
+    colorscheme hadalized
+catch /^Vim\%((\a\+)\)\=:E185/
+    " set notermguicolors
+    " set noguicursor
+    colorscheme desert
+endtry
+]])
+
+vim.cmd([[
+autocmd filetype nix setlocal commentstring=#\ %s
+autocmd filetype cfg setlocal commentstring=#\ %s
+autocmd filetype sql setlocal commentstring=--\ %s
+autocmd filetype pgsql setlocal commentstring=--\ %s
+autocmd filetype xdefaults setlocal commentstring=!\ %s
+autocmd filetype groovy setlocal commentstring=//\ %s
+autocmd filetype jenkinsfile setlocal commentstring=//\ %s
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+filetype indent on
+]])
+
+-- ---------------------------------------------------------------------------
+-- load packages
 -- ---------------------------------------------------------------------------
 require('packages')
+
+
+
+-- ---------------------------------------------------------------------------
+-- post package config
+-- ---------------------------------------------------------------------------
+
 vim.g.neovide_cursor_animation_length=0.0
 vim.g.neovide_cursor_trail_length=0.01
-vim.o.guifont = "JetBrainsMono Nerd Font"
+vim.g.tex_flavor = 'latex'
+vim.g.sql_type_default = 'pgsql'
+vim.g.loaded_python_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.ackprg = 'rg --vimgrep --no-heading -uu'
 
--- FIXME: Get bare repo detection working
--- Seems the ret of the jobwait is always same, likely API difference?
--- local cwd = vim.fn.getcwd()
--- print(cwd)
--- NOTE: To work with bare repos we use the work around here
--- https://github.com/lewis6991/gitsigns.nvim/issues/397#issuecomment-1003631236
--- local jid = vim.fn.jobstart({ "git", "rev-parse", "--is-inside-work-tree" })
--- print(jid)
--- local ret = vim.fn.jobwait({jid})[1]
--- print(ret)
--- if ret == 0 then
---     vim.env.GIT_DIR = vim.fn.expand("~/.git")
---     vim.env.GIT_WORK_TREE = vim.fn.expand("~")
--- end
+-- vim.o.autowrite = true      --  write when moving to other buffers/windows
+-- vim.o.clipboard+=unnamedplus     -- make yanked text available in system clipboard
+-- vim.o.mouse='a'
+vim.o.autochdir = true
+vim.o.colorcolumn = '+1'
+vim.o.confirm = true
+vim.o.expandtab = true
+vim.o.foldcolumn = "1"
+vim.o.foldenable = true
+vim.o.foldlevelstart = 99
+vim.o.foldmethod = 'indent'
+vim.o.foldnestmax = 8
+vim.o.guifont = "JetBrainsMono Nerd Font"
+vim.o.hidden = true
+vim.o.ignorecase = true
+vim.o.inccommand = 'nosplit'
+vim.o.linebreak = true
+vim.o.modeline = false  -- security risk?
+vim.o.number = true
+vim.o.numberwidth = 4
+vim.o.pumblend = 10
+vim.o.scrolljump = 1
+vim.o.scrolloff = 5
+vim.o.shiftwidth = 4
+vim.o.showcmd = true
+vim.o.showmode = true
+vim.o.smartcase = true
+vim.o.softtabstop = 4
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.tabstop = 4
+vim.o.textwidth = 79
+vim.o.title = true
+vim.o.undofile = true
+vim.o.undolevels = 1000
+vim.o.wildmenu = true
+vim.o.wildoptions = 'pum'
+vim.o.wrap = false
+
+vim.opt.completeopt = {'noinsert', 'menuone', 'noselect'}
+vim.opt.clipboard:append('unnamedplus')
+vim.opt.shortmess:append('A')
+vim.opt.formatoptions:remove('tc')
+
+vim.opt.listchars = {
+    tab = '>-',
+    trail = '·',
+    extends = '◣',
+    precedes = '◢',
+    nbsp = '○',
+    eol = '↵',
+}
+
+vim.opt.wildignore = {
+    '*.DS_Store',
+    '.git',
+    '.hg',
+    '.svn',
+    '*.o',
+    '*.obj',
+    '*.exe',
+    '*.pyc',
+    '*.luac',
+    '*.class',
+    '*/target/*',
+}
+
+-- vim.opt.statusline = {
+--     '%{mode()} | ',
+--     'b:%n | ',
+--     ' %F |',
+--     -- '%{fugitive#statusline()}',
+--     '%=',
+--     '%{&fenc} | ',
+--     '{&ff} | ',
+--     '%h',
+--     '%m',
+--     '%w',
+--     '%r',
+--     '%y',
+--     '%p%% %l:%c',
+--     '#warningmsg#',
+--     '%*',
+-- }

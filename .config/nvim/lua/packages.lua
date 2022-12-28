@@ -8,7 +8,6 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.api.nvim_command("packadd packer.nvim")
 end
 
-
 -- Only required if you have packer configured as `opt`
 -- Apparently it's only loaded on require now anyway?
 -- vim.cmd [[packadd packer.nvim]]
@@ -18,6 +17,7 @@ return require("packer").startup(
         -- Packer can manage itself
         use "wbthomason/packer.nvim"
 
+        use { "rktjmp/shipwright.nvim" }
         -- colorscheme
         use {
             "shawnohare/hadalized.nvim",
@@ -26,9 +26,12 @@ return require("packer").startup(
             }
         }
 
-        -- ------------------------------------------------------------------------
-        -- Treesitter
-        -- ------------------------------------------------------------------------
+        use {
+            'echasnovski/mini.nvim',
+            config = function()
+                require('mini.align').setup({})
+            end
+        }
 
         use {
             "nvim-treesitter/nvim-treesitter",
@@ -72,6 +75,13 @@ return require("packer").startup(
         --         orgmode.setup{}
         --     end
         -- }
+        use {
+            'nvim-lualine/lualine.nvim',
+            requires = { 'kyazdani42/nvim-web-devicons'},
+            config = function()
+                require('lualine').setup()
+             end
+        }
 
         use {
             'windwp/nvim-autopairs',
@@ -218,7 +228,7 @@ return require("packer").startup(
                     flags = {
                         debounce_text_changes = 150,
                     },
-                    capabilities = require('cmp_nvim_lsp').update_capabilities(
+                    capabilities = require('cmp_nvim_lsp').default_capabilities(
                         vim.lsp.protocol.make_client_capabilities()
                     ),
                     on_attach = function(client, bufnr)
@@ -248,16 +258,18 @@ return require("packer").startup(
 
                 mason_lspconfig.setup({
                   ensure_installed = {
-                    "eslint-lsp",
-                    "rome",
-                    "terraform-ls",
-                    "tflint",
-                    "typescript-language-server",
-                    "yaml-language-server",
-                    "yamllint",
+                    -- "eslint-lsp",
+                    -- "rome",
+                    -- "terraform-ls",
+                    -- "tflint",
+                    -- "typescript-language-server",
                     "sumneko_lua",
-                    "pyright",
-                    "pylint",
+		    "pyright",
+
+                    -- "yaml-language-server",
+                    -- "yamllint",
+                    -- "pyright",
+                    -- "pylint",
                   }
                 })
                 mason_lspconfig.setup_handlers({
