@@ -38,7 +38,7 @@ function set_vars() {
     export XDG_DATA_HOME="${LOCAL_HOME}/share"
     export XDG_STATE_HOME="${LOCAL_HOME}/state"
     export XDG_LIB_HOME="${LOCAL_HOME}/lib"
-    export XDG_OPT_HOME="${OPT_HOME}"
+    export XDG_OPT_HOME="${LOCAL_HOME}/opt"
     export XDG_RUNTIME_DIR="$TMPDIR"
     export XDG_SRC_HOME="${LOCAL_HOME}/src"
     export XDG_VAR_HOME="${LOCAL_HOME}/var"
@@ -51,8 +51,8 @@ function set_vars() {
     # export GOBIN="${XDG_BIN_HOME}"
     # export PYTHONUSERBASE="${XDG_OPT_HOME}"
     # export SPARK_HOME="/opt/spark"
-    export CARGO_HOME="${OPT_HOME}/cargo"
-    export MAMBA_ROOT_PREFIX="${OPT_HOME}/mamba"
+    export CARGO_HOME="${XDG_OPT_HOME}/cargo"
+    export MAMBA_ROOT_PREFIX="${XDG_OPT_HOME}/mamba"
     export CONDA_ROOT="${MAMBA_ROOT_PREFIX}"
     export CONDA_ENVS_PATH="${XDG_STATE_HOME}/mamba/envs"
     export CONDA_PKGS_DIRS="${XDG_STATE_HOME}/mamba/pkgs"
@@ -168,35 +168,38 @@ function set_vars() {
     # NOTE: GREP_OPTIONS is deprecated.
     # export GREP_OPTIONS='--color=auto'
     export ENV_SET=1
+    export IS_SET_ENVVARS=1
+}
+
+# An alias for set_vars.
+function set_envvars() {
+    set_vars
 }
 
 function set_aliases() {
-    # skip
-    return 0
-    case "${OSTYPE}" in
-        linux*)
-            alias ls="ls --color -GF"
-            ;;
-        **)
-            if [ $(command -v gls) 1> /dev/null ]; then
-                alias ls="gls --color -GF"
-            else
-                alias ls="ls -GF"
-            fi
-            ;;
-    esac
+    if [ -z IS_SET_ALIASES ]; then
+        return 0
+    fi
 
-    alias la="ls -GFlashi"
-    alias ll="ls -GFlshi"
+    if [ $(command -v exa) 1> /dev/null ]; then
+      alias ls="exa --icons --color-scale";
+      alias la="exa --long --all --icons --color-scale --group --header";
+      alias lg="exa --long --all --icons --color-scale --grid --group --header";
+    fi
+
+
     alias ..="cd .."
     alias ...="cd ../.."
     alias ....="cd ../../.."
     alias .....="cd ../../../.."
     alias emc="emacsclient"
-    alias code="code-insiders"
+    # alias code="code-insiders"
     alias oni="oni2"
-    alias usevenv="mamba activate"
+    # alias usevenv="mamba activate"
+    alias homegit="git --git-dir=$HOME/.git/ --work-tree=$HOME"
     alias ce="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
+    alias mumamba="micromamba"
+    export IS_SET_ALIASES=1
 }
 
 function set_path() {
