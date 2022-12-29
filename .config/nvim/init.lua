@@ -9,8 +9,8 @@ end
 -- pre package config
 -- ---------------------------------------------------------------------------
 vim.g.mapleader = " "
-vim.o.termguicolors = true
-vim.o.background = 'dark'
+vim.opt.termguicolors = true
+vim.opt.background = 'dark'
 
 
 vim.cmd([[
@@ -54,48 +54,48 @@ vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.ackprg = 'rg --vimgrep --no-heading -uu'
 
-vim.o.autochdir = true
-vim.o.autowrite = false --  write when moving to other buffers/windows
-vim.o.colorcolumn = '+1'
-vim.o.confirm = true
-vim.o.expandtab = true
-vim.o.foldcolumn = "1"
-vim.o.foldenable = true
-vim.o.foldlevelstart = 99
-vim.o.foldmethod = 'indent'
-vim.o.foldnestmax = 8
-vim.o.guifont = "JetBrainsMono Nerd Font"
-vim.o.hidden = true
-vim.o.ignorecase = true
-vim.o.inccommand = 'nosplit'
-vim.o.linebreak = true
-vim.o.modeline = false  -- security risk?
-vim.o.mouse='a'
-vim.o.number = true
-vim.o.numberwidth = 4
-vim.o.pumblend = 10
-vim.o.scrolljump = 1
-vim.o.scrolloff = 5
-vim.o.shiftwidth = 4
-vim.o.showcmd = true
-vim.o.showmode = true
-vim.o.smartcase = true
-vim.o.softtabstop = 4
-vim.o.splitbelow = true
-vim.o.splitright = true
-vim.o.tabstop = 4
-vim.o.textwidth = 79
-vim.o.title = true
-vim.o.undofile = true
-vim.o.undolevels = 1000
-vim.o.wildmenu = true
-vim.o.wildoptions = 'pum'
-vim.o.wrap = false
-
-vim.opt.completeopt = {'noinsert', 'menuone', 'noselect'}
+vim.opt.autochdir = true
+vim.opt.autowrite = false --  write when moving to other buffers/windows
 vim.opt.clipboard:append('unnamedplus')
-vim.opt.shortmess:append('A')
+vim.opt.colorcolumn = '+1'
+vim.opt.completeopt = {'noinsert', 'menuone', 'noselect'}
+vim.opt.confirm = true
+vim.opt.expandtab = true
+vim.opt.foldcolumn = "1"
+vim.opt.foldenable = true
+vim.opt.foldlevelstart = 99
+vim.opt.foldmethod = 'indent'
+vim.opt.foldnestmax = 8
 vim.opt.formatoptions:remove('tc')
+vim.opt.guifont = "JetBrainsMono Nerd Font"
+vim.opt.hidden = true
+vim.opt.ignorecase = true
+vim.opt.inccommand = 'nosplit'
+vim.opt.linebreak = true
+vim.opt.modeline = false  -- security risk?
+vim.opt.mouse='a'
+vim.opt.number = true
+vim.opt.numberwidth = 4
+vim.opt.pumblend = 10
+vim.opt.scrolljump = 1
+vim.opt.scrolloff = 5
+vim.opt.shiftwidth = 4
+vim.opt.shortmess:append('A')
+vim.opt.showcmd = true
+vim.opt.showmode = true
+vim.opt.smartcase = true
+vim.opt.softtabstop = 4
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.tabstop = 4
+vim.opt.textwidth = 79
+vim.opt.title = true
+vim.opt.undofile = true
+vim.opt.undolevels = 1000
+vim.opt.wildmenu = true
+vim.opt.wildoptions = 'pum'
+vim.opt.wrap = false
+
 
 vim.opt.listchars = {
     tab = '>-',
