@@ -7,7 +7,7 @@ function _git() {
 
 function sync() {
     # Pull changes into bare repo and checkout
-    cd ~/home.git
+    cd ~/.git
     git add .
     git commit -m "Syncing"
     git push

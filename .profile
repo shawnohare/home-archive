@@ -199,7 +199,7 @@ function set_aliases() {
     # alias usevenv="mamba activate"
     alias gih="git --git-dir=$HOME/.git/ --work-tree=$HOME"
     alias vih="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
-    alias vi="nvim"
+    # alias vi="nvim"
     alias mumamba="micromamba"
     export IS_SET_ALIASES=1
 }
@@ -210,17 +210,14 @@ function set_path() {
     fi
     echo "Setting path"
     
-    local usr="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/bin:/opt/bin"
-    local lang="${CARGO_HOME}/bin:${GOPATH}/bin:${PATH}"
+    local brew="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin"
+    local usr="/usr/local/bin:/usr/local/sbin:/usr/local/opt/bin:/opt/bin"
+    local langs="${CARGO_HOME}/bin:${GOPATH}/bin"
     # NOTE: brew shellenv just sets some vars
     # eval "$(/opt/homebrew/bin/brew shellenv)" 2&> /dev/null
-    local loc="${HOME}/bin:${XDG_BIN_HOME}"
-    # append to path so nix profile comes first
-    PATH="${PATH}:${loc}:${lang}:${usr}"
-    # TODO: Rely on shell hooks for mamba.
-    # PATH="${MAMBA_ROOT_PREFIX}/bin:${PYENV_ROOT}/bin:${PATH}"
-    # PATH="${CONDA_OPT_HOME}/bin:${CONDA_ROOT}/condabin:${PYENV_ROOT}/bin:${PATH}"
-    # TODO: Can probably delete this and use the daemon.
+    local local="${HOME}/bin:${XDG_BIN_HOME}"
+    # nix components get set prior, so append most prefixes
+    PATH="${local}:${PATH}:${langs}:${brew}:${usr}"
     export PATH
     export IS_SET_PATH=1
 }

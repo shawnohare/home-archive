@@ -26,7 +26,7 @@ rm -rf config.tmp
 ```
 
 One benefit of cloning to `~/.git` is that `git` will be able to directly see
-history, branch information, etc when not in a non-bare repository.
+history, branch information, etc.
 
 ## Usage
 
