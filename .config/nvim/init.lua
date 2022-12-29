@@ -1,5 +1,10 @@
 -- NOTE: Useful notes https://vonheikemen.github.io/devlog/tools/configuring-neovim-using-lua/
 
+
+if (vim.g.vscode ~= nil) then
+    do return end
+end
+
 -- ---------------------------------------------------------------------------
 -- pre package config
 -- ---------------------------------------------------------------------------
@@ -12,8 +17,6 @@ vim.cmd([[
 try
     colorscheme hadalized
 catch /^Vim\%((\a\+)\)\=:E185/
-    " set notermguicolors
-    " set noguicursor
     colorscheme desert
 endtry
 ]])
@@ -51,10 +54,8 @@ vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.ackprg = 'rg --vimgrep --no-heading -uu'
 
--- vim.o.autowrite = true      --  write when moving to other buffers/windows
--- vim.o.clipboard+=unnamedplus     -- make yanked text available in system clipboard
--- vim.o.mouse='a'
 vim.o.autochdir = true
+vim.o.autowrite = false --  write when moving to other buffers/windows
 vim.o.colorcolumn = '+1'
 vim.o.confirm = true
 vim.o.expandtab = true
@@ -69,6 +70,7 @@ vim.o.ignorecase = true
 vim.o.inccommand = 'nosplit'
 vim.o.linebreak = true
 vim.o.modeline = false  -- security risk?
+vim.o.mouse='a'
 vim.o.number = true
 vim.o.numberwidth = 4
 vim.o.pumblend = 10
@@ -118,7 +120,8 @@ vim.opt.wildignore = {
     '*/target/*',
 }
 
--- vim.opt.statusline = {
+-- default lualine seems sensible enough for now.
+-- local statusline = {
 --     '%{mode()} | ',
 --     'b:%n | ',
 --     ' %F |',
@@ -135,3 +138,4 @@ vim.opt.wildignore = {
 --     '#warningmsg#',
 --     '%*',
 -- }
+-- vim.opt.statusline = table.concat(statusline, '')
