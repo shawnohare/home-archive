@@ -12,11 +12,12 @@
 #
 # We treat this file as a library of common profile init functions instead
 # that can be called from other locations.
+# NOTE: These functions themselves do not persist, so the file must re-sourced
+# in most rc files.
 # ----------------------------------------------------------------------------
 
 function set_vars() {
     # Init
-    export TESTVAR=1
     export TMPDIR="${TMPDIR:-/tmp}"
     export TERMINAL="alacritty"
 
@@ -143,20 +144,20 @@ function set_vars() {
     # The pager 'less' (the default pager for man-pages) depends on
     # the terminfo termcap interface for color capabilities. Exporting
     # the following parameters provides for colored man-page display.
-    LESS_TERMCAP_mb=$(printf "\\033[01;31m")    # begins blinking = LIGHT_RED
-    LESS_TERMCAP_md=$(printf "\\033[00;34m")    # begins bold = BLUE
-    LESS_TERMCAP_me=$(printf "\\033[0m")        # ends mode = NO_COLOR
-    LESS_TERMCAP_so=$(printf "\\033[00;47;30m") # begins standout-mode = REVERSE_WHITE
-    LESS_TERMCAP_se=$(printf "\\033[0m")        # ends standout-mode = NO_COLOR
-    LESS_TERMCAP_us=$(printf "\\033[00;32m")    # begins underline = LIGHT_GREEN
-    LESS_TERMCAP_ue=$(printf "\\033[0m")        # ends underline = NO_COLOR
-    export LESS_TERMCAP_mb
-    export LESS_TERMCAP_md
-    export LESS_TERMCAP_me
-    export LESS_TERMCAP_so
-    export LESS_TERMCAP_se
-    export LESS_TERMCAP_us
-    export LESS_TERMCAP_ue
+    # LESS_TERMCAP_mb=$(printf "\\033[01;31m")    # begins blinking = LIGHT_RED
+    # LESS_TERMCAP_md=$(printf "\\033[00;34m")    # begins bold = BLUE
+    # LESS_TERMCAP_me=$(printf "\\033[0m")        # ends mode = NO_COLOR
+    # LESS_TERMCAP_so=$(printf "\\033[00;47;30m") # begins standout-mode = REVERSE_WHITE
+    # LESS_TERMCAP_se=$(printf "\\033[0m")        # ends standout-mode = NO_COLOR
+    # LESS_TERMCAP_us=$(printf "\\033[00;32m")    # begins underline = LIGHT_GREEN
+    # LESS_TERMCAP_ue=$(printf "\\033[0m")        # ends underline = NO_COLOR
+    # export LESS_TERMCAP_mb
+    # export LESS_TERMCAP_md
+    # export LESS_TERMCAP_me
+    # export LESS_TERMCAP_so
+    # export LESS_TERMCAP_se
+    # export LESS_TERMCAP_us
+    # export LESS_TERMCAP_ue
 
     # zsh. Can also set in .zshenv but we'd like other shells to still know
     # where to look for zsh files, potentially.
@@ -177,16 +178,16 @@ function set_envvars() {
 }
 
 function set_aliases() {
-    if [ -z IS_SET_ALIASES ]; then
-        return 0
-    fi
+    # Do not carry over to subshells.
+    # if [ ! -z $IS_SET_ALIASES ]; then
+    #     return 0
+    # fi
 
     if [ $(command -v exa) 1> /dev/null ]; then
       alias ls="exa --icons --color-scale";
       alias la="exa --long --all --icons --color-scale --group --header";
       alias lg="exa --long --all --icons --color-scale --grid --group --header";
     fi
-
 
     alias ..="cd .."
     alias ...="cd ../.."
@@ -196,13 +197,18 @@ function set_aliases() {
     # alias code="code-insiders"
     alias oni="oni2"
     # alias usevenv="mamba activate"
-    alias homegit="git --git-dir=$HOME/.git/ --work-tree=$HOME"
-    alias ce="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
+    alias gih="git --git-dir=$HOME/.git/ --work-tree=$HOME"
+    alias vih="GIT_DIR=$HOME/.git GIT_WORK_TREE=$HOME nvim"
+    alias vi="nvim"
     alias mumamba="micromamba"
     export IS_SET_ALIASES=1
 }
 
 function set_path() {
+    if [ ! -z $IS_SET_PATH ]; then
+        return 0
+    fi
+    echo "Setting path"
     
     local usr="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/bin:/opt/bin"
     local lang="${CARGO_HOME}/bin:${GOPATH}/bin:${PATH}"
@@ -216,6 +222,7 @@ function set_path() {
     # PATH="${CONDA_OPT_HOME}/bin:${CONDA_ROOT}/condabin:${PYENV_ROOT}/bin:${PATH}"
     # TODO: Can probably delete this and use the daemon.
     export PATH
+    export IS_SET_PATH=1
 }
 
 # ----------------------------------------------------------------------------

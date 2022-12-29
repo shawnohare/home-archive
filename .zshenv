@@ -17,8 +17,10 @@
 
 source "${HOME}/.profile"
 set_vars
-if [[ $SHLVL == 1 && ! -o LOGIN ]]; then
-    set_path
-fi
+set_path
+# [[ -z IS_PATH_SET ]] || set_path
+# if [[ $SHLVL == 1 && ! -o LOGIN ]]; then
+#     set_path
+# fi
 # export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export PYENV_SHELL=zsh  # Normally set by pyenv init -

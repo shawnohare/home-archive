@@ -21,4 +21,4 @@
 #fi
 
 # call .profile:set_path
-set_path
+# set_path

@@ -13,6 +13,9 @@ source "${HOME}/.profile" > /dev/null 2>&1
 export PYENV_SHELL=bash
 export SHDATA="${XDG_DATA_HOME:-${HOME}/.local/share}/bash"
 
+set_aliases
+set_path
+
 # env vars
 HISTFILESIZE=1000000
 HISTSIZE=1000
@@ -77,8 +80,5 @@ shopt -s nocaseglob
 # Make echo builtin expand backslash-escape-sequence.
 shopt -s xpg_echo
 
-# source "${XDG_CONFIG_HOME}/fzf/fzf.bash" > /dev/null 2>&1
-# source "/usr/local/etc/profile.d/bash_completion.sh" > /dev/null 2>&1
-
-source "${XDG_CONFIG_HOME}/sh/postrc.sh" > /dev/null 2>&1
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# source <(starship init ${ISHELL} --print-full-init 2&> /dev/null)
+source <(starship init ${ISHELL} --print-full-init) 2&> /dev/null

@@ -2,12 +2,14 @@
 # /etc/zprofile and ~/.zprofile are sourced before.
 
 # aliases
+source "${HOME}/.profile"
 export ISHELL="zsh"
 
-# Aliases seem to be wiped out if set prior?
-if [[ $SHLVL == 1 ]]; then
-    set_aliases
-fi
+set_aliases
+set_path
+# if [[ $SHLVL == 1 ]]; then
+#     set_aliases
+# fi
 
 # ----------------------------------------------------------------------------
 # Load plugins.
@@ -323,6 +325,9 @@ source "${MAMBA_ROOT_PREFIX}/etc/profile.d/mamba.sh" 2&> /dev/null
 # starship
 # ----------------------------------------------------------------------------
 source <(starship init ${ISHELL} --print-full-init 2&> /dev/null)
+# if [ -z "${STARSHIP_SHELL}" ]; then
+#     source "${ZDOTDIR}/prompt.zsh"
+# fi
 
 # ----------------------------------------------------------------------------
 # Nix
