@@ -61,12 +61,13 @@ vim.opt.colorcolumn = '+1'
 vim.opt.completeopt = {'noinsert', 'menuone', 'noselect'}
 vim.opt.confirm = true
 vim.opt.expandtab = true
-vim.opt.foldcolumn = "1"
+vim.opt.foldcolumn = "0"
 vim.opt.foldenable = true
 vim.opt.foldlevelstart = 99
 vim.opt.foldmethod = 'indent'
 vim.opt.foldnestmax = 8
-vim.opt.formatoptions:remove('tc')
+-- vim.opt.formatoptions:remove('tc')
+vim.opt.formatoptions = 'roql'
 vim.opt.guifont = "JetBrainsMono Nerd Font"
 vim.opt.hidden = true
 vim.opt.ignorecase = true

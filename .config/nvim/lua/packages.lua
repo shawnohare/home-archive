@@ -1,12 +1,20 @@
----------------------------------------------------------------------------
--- boostrap
 -- ---------------------------------------------------------------------------
-local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+-- Packer managed packages and their configurations
+-- Most package specific configurations can be specified in this file.
+-- ---------------------------------------------------------------------------
 
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    vim.fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path})
-    vim.api.nvim_command("packadd packer.nvim")
+-- Bootstrap function to run if packer is not installed.
+local bootstrap = function()
+    local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+    if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+        vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+        vim.api.nvim_command("packadd packer.nvim")
+        return true
+    end
+  return false
 end
+
+local is_bootstrapped = bootstrap()
 
 -- Only required if you have packer configured as `opt`
 -- Apparently it's only loaded on require now anyway?
@@ -18,7 +26,7 @@ return require("packer").startup(
         use "wbthomason/packer.nvim"
 
         use { "rktjmp/shipwright.nvim" }
-        -- colorscheme
+
         use {
             "shawnohare/hadalized.nvim",
             requires = {
@@ -75,6 +83,7 @@ return require("packer").startup(
         --         orgmode.setup{}
         --     end
         -- }
+
         use {
             'nvim-lualine/lualine.nvim',
             requires = { 'kyazdani42/nvim-web-devicons'},
@@ -419,7 +428,6 @@ return require("packer").startup(
             end
         }
 
-        -- tpope plugins
         use {
             "tpope/vim-commentary",
             "tpope/vim-repeat",
@@ -466,10 +474,10 @@ return require("packer").startup(
             end
         }
 
-        -- -------------------------------------------------------------------------
-        -- key remmaping
-        -- TODO:We could probably just write our own that loops through a dict.
-        -- -------------------------------------------------------------------------
+        ---- -------------------------------------------------------------------------
+        ---- key remmaping
+        ---- TODO:We could probably just write our own that loops through a dict.
+        ---- -------------------------------------------------------------------------
         use {
             "LionC/nest.nvim",
             config = function()
@@ -614,22 +622,29 @@ return require("packer").startup(
             end
         }
 
-        -- TODO:
-        -- NOTE: Want to like this, but can't disable highlights.
-        use {
-            "folke/todo-comments.nvim",
-            requires = "nvim-lua/plenary.nvim",
-            config = function()
-                require("todo-comments").setup (
-                    {
-                        highlight = {
-                            keyword = 'fg',
-                            after = '',
-                            comments_only = true,
-                        },
-                    }
-                )
-            end
-        }
+        ---- TODO:
+        ---- NOTE: Want to like this, but can't disable highlights.
+        --use {
+        --    "folke/todo-comments.nvim",
+        --    requires = "nvim-lua/plenary.nvim",
+        --    config = function()
+        --        require("todo-comments").setup (
+        --            {
+        --                highlight = {
+        --                    keyword = 'fg',
+        --                    after = '',
+        --                    comments_only = true,
+        --                },
+        --            }
+        --        )
+        --    end
+        --}
+
+        -- TODO: Unclear if this actually works.
+        if is_bootstrapped then
+            local packer = require('packer')
+            local lockfile = vim.fn.stdpath('config') .. '/packer/Lockfile.json'
+            packer.rollback(lockfile)
+        end
     end
 )
