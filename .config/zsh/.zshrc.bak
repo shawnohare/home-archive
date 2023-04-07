@@ -27,8 +27,8 @@ function pack() {
     source "${pkg}/$2"
 }
 
-pack "junegunn/fzf"                           "shell/completion.zsh"
-pack "junegunn/fzf"                           "shell/key-bindings.zsh"
+# pack "junegunn/fzf"                           "shell/completion.zsh"
+# pack "junegunn/fzf"                           "shell/key-bindings.zsh"
 # NOTE: z.lua can be used instead or z.sh
 # pack "rupa/z"                                 "z.sh"
 # when using z-lua installed via nix:
@@ -43,31 +43,16 @@ pack "esc/conda-zsh-completion"               "conda-zsh-completion.plugin.zsh"
 pack "spwhitt/nix-zsh-completions"            "nix-zsh-completions.plugin.zsh"
 pack "zsh-users/zsh-completions"              "zsh-completions.plugin.zsh"
 
+
+# source "${PYENV_ROOT}/completions/pyenv.zsh"
 # ----------------------------------------------------------------------------
-# Options
-HISTFILE="${XDG_STATE_HOME}/zsh/history"
-HISTSIZE=2048                    # lines to maintain in memory
-SAVEHIST=100000                  # lines to maintain in history file
+fpath=(${XDG_STATE_HOME}/zsh/completions  ${XDG_DATA_HOME}/zsh-completions ${PYENV_ROOT}/completions $fpath)
+fpath+=${ZSH_PKG_HOME}/conda-zsh-completions
+# TODO: nix-zsh-completions seems buggy. No completions shown.
+# fpath+=${ZSH_PKG_HOME}/nix-zsh-completions
+autoload -U compinit && compinit
 
-# setopt hist_ignore_all_dups      # no duplicate
-# setopt inc_append_history_time   # add commands as they are typed,
-setopt autocd
-setopt always_to_end
-setopt bang_hist                 # !keyword
-setopt complete_in_word
-setopt completealiases
-setopt correct
-setopt extended_history          # include timestamps
-setopt extendedglob
-setopt hash_list_all
-setopt hist_reduce_blanks        # trim blanks
-setopt hist_verify               # show before executing history commands
-setopt list_ambiguous
-setopt nomatch
-setopt notify
-setopt share_history             # share hist between sessions
-unsetopt hist_ignore_space       # ignore space prefixed commands
-
+# ----------------------------------------------------------------------------
 # NOTE: iterm shell integration messes with the prompt and causes
 # emacs tramp mode to hang indefinitely.
 # if [[ $TERM == "dumb" ]]; then
@@ -80,16 +65,6 @@ unsetopt hist_ignore_space       # ignore space prefixed commands
 #   return
 # fi
 
-# ----------------------------------------------------------------------------
-# Completions
-# source "${PYENV_ROOT}/completions/pyenv.zsh"
-fpath=(${XDG_STATE_HOME}/zsh/completions  ${XDG_DATA_HOME}/zsh-completions ${PYENV_ROOT}/completions $fpath)
-fpath+=${ZSH_PKG_HOME}/conda-zsh-completions
-# TODO: nix-zsh-completions seems buggy. No completions shown.
-# fpath+=${ZSH_PKG_HOME}/nix-zsh-completions
-autoload -U compinit && compinit
-
-# ----------------------------------------------------------------------------
 bindkey -v
 
 # changing dirs
@@ -98,8 +73,15 @@ add-zsh-hook chpwd chpwd_recent_dirs
 autoload -U zmv
 
 # ----------------------------------------------------------------------------
-# Completion
+# Completion (derived from http://dustri.org/b/my-zsh-configuration.html)
+# Some of these might be taken care of by oh-my-zsh/lib/completion
 zmodload -i zsh/complist
+setopt hash_list_all
+setopt completealiases
+setopt always_to_end
+setopt complete_in_word
+setopt correct
+setopt list_ambiguous
 
 # zstyle ':completion::complete:*' use-cache on               # completion caching, use rehash to clear
 # zstyle ':completion:*' cache-path "${ZSH_STATE_HOME}/zsh"     # cache path
@@ -138,19 +120,29 @@ unalias run-help &> /dev/null
 # alias help=run-help
 #
 # ----------------------------------------------------------------------------
-# zsh-autosuggestions
-# NOTE: Accepting an autosuggestion leads to weird highlighting.
-bindkey '^L' autosuggest-accept
-bindkey '^K' history-substring-search-up
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
+# history
+HISTFILE="${XDG_STATE_HOME}/zsh/history"
+HISTSIZE=2048                    # lines to maintain in memory
+SAVEHIST=100000                  # lines to maintain in history file
+setopt share_history             # share hist between sessions
+setopt extended_history          # include timestamps
+# setopt inc_append_history_time   # add commands as they are typed,
+# setopt hist_ignore_all_dups      # no duplicate
+unsetopt hist_ignore_space       # ignore space prefixed commands
+setopt hist_reduce_blanks        # trim blanks
+setopt hist_verify               # show before executing history commands
+setopt bang_hist                 # !keyword
 
+# ----------------------------------------------------------------------------
+# zsh-autosuggestions
+# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=008
+bindkey '^L' autosuggest-accept
+# NOTE: Accepting an autosuggestion leads to weird highlighting.
 
 # ----------------------------------------------------------------------------
 # highlights
 
 # Set which highlighters to use.
-# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=008
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root)
 
 # Bracket highlights
@@ -269,6 +261,16 @@ ZSH_HIGHLIGHT_STYLES[named-fd]='none'
 ZSH_HIGHLIGHT_STYLES[arg0]='none'
 ZSH_HIGHLIGHT_STYLES[default]='none'
 
+# ----------------------------------------------------------------------------
+
+# zsh-completions
+# zsh-history-substring-search
+# vim-like snippet keybindings for history-substring-search
+bindkey '^[[A' history-substring-search-up
+bindkey '^K' history-substring-search-up
+bindkey '^J' history-substring-search-down
+bindkey '^[[B' history-substring-search-down
+
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=red,bold'
 # HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=yellow,fg=black'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=black,bold'
@@ -278,6 +280,10 @@ HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=black,bold'
 
 # ----------------------------------------------------------------------------
 # options
+setopt autocd
+setopt extendedglob
+setopt nomatch
+setopt notify
 
 
 # ============================================================================

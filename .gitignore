@@ -12,7 +12,7 @@ src/
 .CFUserTextEncoding
 .JIRAClient/
 .config/zsh/.chpwd-recent-dirs
-.config/zsh/.zcompdump
+.config/zsh/.zcompdump*
 .config/zsh/.zsh_sessions/
 .config/zsh/history
 .zsh_history
