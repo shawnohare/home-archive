@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "Printing ligatures."
 ligs=(
   'www'
   '<*'
@@ -39,3 +40,4 @@ ligs=(
 for lig in "${ligs[@]}"; do
     echo "${lig}"
 done
+
