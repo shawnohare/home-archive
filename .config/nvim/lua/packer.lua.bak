@@ -275,7 +275,7 @@ return require("packer").startup(
                     -- "tflint",
                     -- "typescript-language-server",
                     "sumneko_lua",
-		    "pyright",
+                    "pyright",
 
                     -- "yaml-language-server",
                     -- "yamllint",
@@ -330,7 +330,6 @@ return require("packer").startup(
             run = "make"
         }
 
-        -- TODO: Empty file finding. Look into this plugin later.
         use {
             "nvim-telescope/telescope.nvim",
             requires = {{"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"}},

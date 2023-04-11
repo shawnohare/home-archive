@@ -1,17 +1,27 @@
 -- NOTE: Useful notes https://vonheikemen.github.io/devlog/tools/configuring-neovim-using-lua/
 
+-- TODO: Seems neovim now uses lsp for gq formatting. This can be nice
+-- for some languages, but not for others.
+-- https://vi.stackexchange.com/questions/39200/wrapping-comment-in-visual-mode-not-working-with-gq
+
+-- Disable netrw for nvim-tree.
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+vim.g.mapleader = " "
+vim.opt.termguicolors = true
+vim.opt.background = 'dark'
 
 if (vim.g.vscode ~= nil) then
     do return end
 end
 
--- ---------------------------------------------------------------------------
--- pre package config
--- ---------------------------------------------------------------------------
-vim.g.mapleader = " "
-vim.opt.termguicolors = true
-vim.opt.background = 'dark'
+require("packager").setup()
 
+
+-- ---------------------------------------------------------------------------
+-- post package config
+-- ---------------------------------------------------------------------------
 
 vim.cmd([[
 try
@@ -35,30 +45,25 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 filetype indent on
 ]])
 
--- ---------------------------------------------------------------------------
--- load packages
--- ---------------------------------------------------------------------------
-require('packages')
 
 
-
--- ---------------------------------------------------------------------------
--- post package config
--- ---------------------------------------------------------------------------
-
-vim.g.neovide_cursor_animation_length=0.0
-vim.g.neovide_cursor_trail_length=0.01
+vim.g.neovide_cursor_animation_length = 0.0
+vim.g.neovide_cursor_trail_length = 0.01
 vim.g.tex_flavor = 'latex'
 vim.g.sql_type_default = 'pgsql'
 vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.ackprg = 'rg --vimgrep --no-heading -uu'
 
+-- ---------------------------------------------------------------------------
+-- options
+-- ---------------------------------------------------------------------------
+
 vim.opt.autochdir = true
-vim.opt.autowrite = false --  write when moving to other buffers/windows
+vim.opt.autowrite = false -- :wqa write when moving to other buffers/windows
 vim.opt.clipboard:append('unnamedplus')
 vim.opt.colorcolumn = '+1'
-vim.opt.completeopt = {'noinsert', 'menuone', 'noselect'}
+vim.opt.completeopt = { 'noinsert', 'menuone', 'noselect' }
 vim.opt.confirm = true
 vim.opt.expandtab = true
 vim.opt.foldcolumn = "0"
@@ -73,8 +78,8 @@ vim.opt.hidden = true
 vim.opt.ignorecase = true
 vim.opt.inccommand = 'nosplit'
 vim.opt.linebreak = true
-vim.opt.modeline = false  -- security risk?
-vim.opt.mouse='a'
+vim.opt.modeline = false -- security risk?
+vim.opt.mouse = 'a'
 vim.opt.number = true
 vim.opt.numberwidth = 4
 vim.opt.pumblend = 10
@@ -121,7 +126,7 @@ vim.opt.wildignore = {
     '*/target/*',
 }
 
--- default lualine seems sensible enough for now.
+-- NOTE: default lualine seems sensible enough for now.
 -- local statusline = {
 --     '%{mode()} | ',
 --     'b:%n | ',
