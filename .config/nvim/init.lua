@@ -12,6 +12,7 @@ vim.g.mapleader = " "
 vim.opt.termguicolors = true
 vim.opt.background = 'dark'
 
+
 if (vim.g.vscode ~= nil) then
     do return end
 end
@@ -145,3 +146,4 @@ vim.opt.wildignore = {
 --     '%*',
 -- }
 -- vim.opt.statusline = table.concat(statusline, '')
+

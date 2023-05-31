@@ -20,14 +20,13 @@ local function setup()
         defaults = {
             lazy = false,
         },
-        -- lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json",
+        -- lockfile = vim.fn.stdpath("config") .. "/lazy/Lockfile.json",
         dev = {
             path = "~/src",
         }
     }
 
-    -- will load all plugins of form ../pkgs/*.lua
-    require("lazy").setup("pkgs", opts)
+    require("lazy").setup("packager.plugins", opts)
 
 end
 
