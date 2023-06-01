@@ -1,0 +1,1 @@
+/Users/shawn.ohare/.local/state/conda/envs/test2
