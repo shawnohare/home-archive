@@ -16,11 +16,10 @@
 # ----------------------------------------------------------------------------
 
 source "${HOME}/.profile"
-set_vars
-set_path
-# [[ -z IS_PATH_SET ]] || set_path
-# if [[ $SHLVL == 1 && ! -o LOGIN ]]; then
-#     set_path
-# fi
+
+export ISHELL="zsh"
+export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
+export ZSH_PKG_HOME="${XDG_STATE_HOME}/zsh/pack"
+
 # export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export PYENV_SHELL=zsh  # Normally set by pyenv init -

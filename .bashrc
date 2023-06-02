@@ -9,12 +9,12 @@
 
 # ----------------------------------------------------------------------------
 export ISHELL="bash"
-source "${HOME}/.profile" > /dev/null 2>&1
+source "${HOME}/.profile" 2&> /dev/null
+source "${XDG_CONFIG_HOME}/sh/aliases.sh"
+source "${XDG_CONFIG_HOME}/sh/path.sh"
 export PYENV_SHELL=bash
-export SHDATA="${XDG_DATA_HOME:-${HOME}/.local/share}/bash"
+export SHDATA="${XDG_STATE_HOME}/bash"
 
-set_aliases
-set_path
 
 # env vars
 HISTFILESIZE=1000000

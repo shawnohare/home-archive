@@ -13,9 +13,10 @@ into `$HOME`.
 
 ```bash
 git clone --bare https://github.com/shawnohare/home.git $HOME/.git
-cd $HOME/.git
-git config --local status.showUntrackedFiles no
 git --git-dir=$HOME/.git/ --work-tree=$HOME checkout -f
+# To optionally not show untracked files:
+# cd $HOME/.git
+# git config --local status.showUntrackedFiles no
 ```
 
 An alternative is to use rsync.
@@ -31,12 +32,12 @@ history, branch information, etc.
 ## Usage
 
 Once the configuration files are installed, a new shell session should have
-access to the `conf` executable that, among other things, wraps git.
+access to the `hit` alias, among other things, wraps git.
 
 For example,
 
 ```bash
-conf git <cmd> [args]
+hit <cmd> [args]
 # equivalent to git --git-dir=$HOME/.git work-tree=$HOME <cmd> [args]
 ```
 

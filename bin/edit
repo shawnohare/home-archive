@@ -1,0 +1,6 @@
+#! /usr/bin/env sh
+if [ "$(git rev-parse --is-inside-work-tree)" = "false" ]; then
+    GIT_DIR="$HOME/.git" GIT_WORK_TREE="$HOME" nvim "$@"
+else
+    nvim "$@"
+fi

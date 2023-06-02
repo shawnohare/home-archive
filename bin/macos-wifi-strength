@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 #
 # $ airport -I
      # agrCtlRSSI: -65

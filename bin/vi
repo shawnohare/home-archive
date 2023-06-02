@@ -1,6 +1,0 @@
-#! /usr/bin/env zsh
-if [[ $(git rev-parse --is-inside-work-tree) == false ]]; then
-    export GIT_DIT="$HOME/.git"
-    export GIT_WORK_TREE="$HOME"
-fi
-nvim "$@"
