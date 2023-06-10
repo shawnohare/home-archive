@@ -6,12 +6,15 @@
 .bash_sessions/
 .bundle/
 .cache/
+.config/ipython/profile_default/db/
+.config/ipython/profile_default/startup/
 .config/zsh/.chpwd-recent-dirs
 .config/zsh/.zcompdump*
 .config/zsh/.zsh_sessions/
 .config/zsh/history
 .docker/
-.local
+.local/state/
+.local/share/
 .nix-defexpr/
 .nix-profile
 .npm/

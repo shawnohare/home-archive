@@ -8,10 +8,10 @@
 # interactive, non-login will source ~/.bashrc
 
 # ----------------------------------------------------------------------------
+source "${HOME}/.config/sh/env.sh" > /dev/null 2>&1
+source "${HOME}/.config/sh/rc.sh" > /dev/null 2>&1
+
 export ISHELL="bash"
-source "${HOME}/.profile" 2&> /dev/null
-source "${XDG_CONFIG_HOME}/sh/aliases.sh"
-source "${XDG_CONFIG_HOME}/sh/path.sh"
 export PYENV_SHELL=bash
 export SHDATA="${XDG_STATE_HOME}/bash"
 

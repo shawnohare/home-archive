@@ -1,9 +1,10 @@
 # zshrc is sourced by interactive shells.
 # /etc/zprofile and ~/.zprofile are sourced before.
 
-source "${HOME}/.profile"
-source "${XDG_CONFIG_HOME}/sh/aliases.sh"
-source "${XDG_CONFIG_HOME}/sh/path.sh"
+# source "${HOME}/.profile"
+# source "${XDG_CONFIG_HOME}/sh/aliases.sh"
+# source "${XDG_CONFIG_HOME}/sh/path.sh"
+source "${XDG_CONFIG_HOME}/sh/rc.sh"
 
 HISTFILE="${XDG_STATE_HOME}/zsh/history"
 HISTSIZE=2048                    # lines to maintain in memory

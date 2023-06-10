@@ -9,13 +9,14 @@ echo "Setting path."
 # usr="/usr/local/bin:/usr/local/sbin:/usr/local/opt/bin:/opt/bin"
 brew="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin"
 langs="${CARGO_HOME}/bin:${GOPATH}/bin"
-local="${HOME}/bin:${XDG_BIN_HOME}"
+local="${XDG_BIN_HOME}"
 
 # Detect if nix has set path and split path into nix and sys parts.
 sys="${PATH#*nix/profiles/default/bin:}"
 if [ -n "${NIX_PROFILES+x}" ]; then
     # echo "nix detected"
-    head="${local}:${PATH%:"${sys}"}"
+    # head="${local}:${PATH%:"${sys}"}"
+    head="${PATH%:"${sys}"}:${local}"
 else
     head="${local}"
 fi

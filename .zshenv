@@ -15,7 +15,7 @@
 # sourced if we are a login shell).
 # ----------------------------------------------------------------------------
 
-source "${HOME}/.profile"
+source "${HOME}/.config/sh/env.sh"
 
 export ISHELL="zsh"
 export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"

@@ -1,4 +1,5 @@
-#! /usr/bin/env sh
+#! /usr/bin/env bash
+# WARNING: Largely deprecated by a few manual commands and nix-darwin.
 
 # if [[ ! -d "$HOME/home.git" ]]; then
 #     git clone https://github.com/shawnohare/home.git $HOME/home.git

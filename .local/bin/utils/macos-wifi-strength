@@ -32,7 +32,7 @@
 
 readonly airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
 
-while x=1
+while true
 do
     # "${airport}" -I | grep CtlRSSI | sed -e 's/^.*://g' | xargs -I SIGNAL printf "\rRSSI dBm: SIGNAL"
     # "${airport}" -I | grep CtlRSSI
@@ -40,5 +40,5 @@ do
     rssi=$(echo "${val}" | grep agrCtlRSSI | cut -d ':' -f 2)
     noise=$(echo "${val}" | grep agrCtlNoise | cut -d ':' -f 2)
     echo "RSSI: ${rssi}, Noise: ${noise}, SNR: $((${rssi}-${noise}))"
-    sleep 1.0
+    sleep 3.0
 done
