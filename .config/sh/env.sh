@@ -1,7 +1,7 @@
 # ----------------------------------------------------------------------------
 # POSIX shell environment variables.
 # ----------------------------------------------------------------------------
-if [ -n "${SH_ENV_SOURCED+x}" ];then
+if [ -z "${FORCE+x}" ] && [ -n "${SH_ENV_SOURCED+x}" ];then
     return 0
 fi
 
@@ -11,7 +11,7 @@ fi
 # still utilize hard-coded values or do not have access to the user env
 # (e.g., some graphical applications).
 # ----------------------------------------------------------------------------
-# export TMPDIR="${TMPDIR:-/tmp}"
+export TMPDIR="${TMPDIR:-/tmp}"
 export XDG_BIN_HOME="${HOME}/.local/bin"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_CONFIG_HOME="${HOME}/.config"
