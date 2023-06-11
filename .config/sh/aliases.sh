@@ -2,10 +2,9 @@
 # Aliases
 # Common between POSIX shells such as bash and zsh.
 # ----------------------------------------------------------------------------
-# if [ -n "${SH_ALIASES_SOURCED+x}" ];then
-#     return 0
-# fi
-if command -v __sh_aliases_set__ 1> /dev/null; then
+
+# Only set aliases if FORCE flag is not set and sentinel alias exists.
+if [ -z "${FORCE+x}" ] && command -v SH_ALIASES_SOURCED 1> /dev/null; then
     return 0
 fi
 
@@ -17,7 +16,7 @@ if command -v exa 1> /dev/null; then
   alias lg="exa --long --all --icons --color-scale --grid --group --header"
 fi
 
-alias __sh_aliases_set__="echo 0"
+alias SH_ALIASES_SOURCED="echo 0"
 alias ..="cd .."
 alias ...="cd ../.."
 alias .2="cd ../.."

@@ -7,7 +7,7 @@
 # unset -f SH_FUNCS_SOURCED
 # ```
 # ----------------------------------------------------------------------------
-if command -v SH_FUNCS_SOURCED 1> /dev/null; then
+if [ -z "${FORCE+x}" ] && command -v SH_FUNCS_SOURCED 1> /dev/null; then
     return 0
 fi
 

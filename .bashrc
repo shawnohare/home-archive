@@ -8,7 +8,7 @@
 # interactive, non-login will source ~/.bashrc
 
 # ----------------------------------------------------------------------------
-source "${HOME}/.config/sh/env.sh" > /dev/null 2>&1
+source "${HOME}/.profile" > /dev/null 2>&1
 source "${HOME}/.config/sh/rc.sh" > /dev/null 2>&1
 
 export ISHELL="bash"
