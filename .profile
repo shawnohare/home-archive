@@ -1,1 +1,1 @@
-/Users/shawn.ohare/.config/sh/env.sh
+.config/sh/env.sh
