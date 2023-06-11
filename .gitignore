@@ -44,3 +44,6 @@ opt/
 src/
 tmp/
 
+# managed by home-manager
+.config/git/config
+
