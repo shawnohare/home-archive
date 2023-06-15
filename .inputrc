@@ -1,8 +1,0 @@
-# readline configuration
-
-set bell-style none
-set editing-mode vi
-
-# key-bindings
-"\C-k": history-substring-search-backward
-"\C-j": history-substring-search-forward
