@@ -7,4 +7,10 @@ return {
             "rktjmp/lush.nvim",
         },
     },
+    {
+        'Allianaab2m/penumbra.nvim',
+        opts = {
+            contrast = 'plusplus',
+        }
+    },
 }
