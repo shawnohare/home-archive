@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-brew install emacs --with-cocoa --with-librsvg --with-gnutls --with-imagemagick
-brew install aspell
-brew linkapps emacs
