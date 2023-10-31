@@ -1,3 +1,11 @@
+# Bare git repo for config files
+
+## Archive Notice
+
+The main contents of this repo have been merged into
+https://github.com/shawnohare/conf and are managed
+along-side nix.
+
 ## Introduction
 
 User configuration managed through a bare git repo. This avoides having to
